@@ -1,11 +1,11 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Code, Zap, Users, Layers, Smartphone, Globe, Star } from "lucide-react";
+import { ArrowRight, Code, Zap, Users, Layers, Smartphone, Globe, Star, Menu, X, Puzzle } from "lucide-react";
 import InteractivePlayground from "@/components/InteractivePlayground";
 import TestimonialCard from "@/components/TestimonialCard";
 import FeatureCard from "@/components/FeatureCard";
 import BenefitCard from "@/components/BenefitCard";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 
 const testimonials = [
@@ -35,6 +35,219 @@ const testimonials = [
     bgColor: "from-gray-800 to-gray-900",
   },
 ];
+
+// Sidebar content for the playground section
+const useRecentChats = () => {
+  const [recentChats, setRecentChats] = useState(() => {
+    const stored = localStorage.getItem('simworks_recent_chats');
+    return stored ? JSON.parse(stored) : [];
+  });
+  useEffect(() => {
+    localStorage.setItem('simworks_recent_chats', JSON.stringify(recentChats));
+  }, [recentChats]);
+  return [recentChats, setRecentChats];
+};
+
+const PlaygroundSidebarContent = ({ sidebarOpen, setSidebarOpen, recentChats, handleSelectChat }) => (
+  <div className="flex flex-col h-full w-56 min-w-[200px] max-w-[90vw] bg-[#181818] border-r border-[#222] rounded-l-2xl">
+    {/* Plugins section at the top */}
+    <div className="p-3 border-b border-[#222]">
+      <div className="flex flex-col gap-2">
+        <button className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-[#232323] text-sm text-gray-200 transition-colors">
+          <Puzzle size={18} /> Add Files
+        </button>
+        <button className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-[#232323] text-sm text-gray-200 transition-colors">
+          <Globe size={18} /> Add Data Source
+        </button>
+        <button className="flex items-center gap-2 px-3 py-2 rounded-md hover:bg-[#232323] text-sm text-gray-200 transition-colors">
+          <Layers size={18} /> Add Code
+        </button>
+      </div>
+    </div>
+    {/* Divider */}
+    <div className="border-b border-[#222] my-1" />
+    {/* Recent chats section */}
+    <div className="flex-1 overflow-y-auto p-2">
+      <div className="text-xs text-gray-400 px-2 mb-2">Recent Chats</div>
+      {recentChats.length === 0 && (
+        <div className="text-gray-500 text-sm px-2 py-4">No recent chats</div>
+      )}
+      {recentChats.map(chat => (
+        <div
+          key={chat.id}
+          className="truncate px-3 py-2 rounded hover:bg-[#232323] cursor-pointer text-sm text-gray-200 mb-1"
+          onClick={() => handleSelectChat(chat)}
+        >
+          {chat.title}
+        </div>
+      ))}
+    </div>
+    {/* Bottom: (optional) */}
+    <div className="p-4 border-t border-[#222] text-xs text-gray-500">SimWorks v1.0</div>
+  </div>
+);
+
+const PlaygroundTopBar = ({ tab, setTab, setSidebarOpen }) => (
+  <div className="flex items-center bg-[#1a1a1a] border-b border-[#333] px-6 h-14">
+    <button className="lg:hidden mr-4 p-2" onClick={() => setSidebarOpen(true)}><Menu size={22} /></button>
+    <button
+      className={`px-6 py-2 text-lg font-semibold rounded-t-lg transition-all duration-200 ${tab === 'Agent' ? 'bg-[#232323] text-white' : 'text-[#9e9e9e] hover:text-white'}`}
+      onClick={() => setTab('Agent')}
+    >
+      Agent
+    </button>
+    <button
+      className={`ml-2 px-6 py-2 text-lg font-semibold rounded-t-lg transition-all duration-200 ${tab === 'Code' ? 'bg-[#232323] text-white' : 'text-[#9e9e9e] hover:text-white'}`}
+      onClick={() => setTab('Code')}
+    >
+      Code
+    </button>
+  </div>
+);
+
+const PlaygroundSection = () => {
+  const [tab, setTab] = useState('Agent');
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [recentChats, setRecentChats] = useRecentChats();
+  const [messages, setMessages] = useState([]);
+  const [code, setCode] = useState('');
+  const [simulationHtml, setSimulationHtml] = useState('');
+  const [loading, setLoading] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages]);
+
+  const handleSendMessage = async (content) => {
+    setMessages(prev => [...prev, { sender: 'user', content }]);
+    setLoading(true);
+    if (!recentChats.some(c => c.title === content)) {
+      setRecentChats([{ id: Date.now().toString(), title: content }, ...recentChats].slice(0, 20));
+    }
+    // Simulate agent response for landing page demo
+    setTimeout(() => {
+      setMessages(prev => [...prev, { sender: 'agent', content: `Agent received: ${content}` }]);
+      setCode('% MATLAB code example\nplot(1:10, sin(1:10));');
+      setSimulationHtml('<div>Simulation output placeholder</div>');
+      setLoading(false);
+    }, 800);
+  };
+
+  const handleSelectChat = (chat) => {
+    setMessages([{ sender: 'user', content: chat.title }]);
+    setCode('');
+    setSimulationHtml('');
+    setSidebarOpen(false);
+  };
+
+  // UI for code and agent panes
+  const CodeViewer = ({ code }) => (
+    <div className="flex-1 bg-[#181818] rounded-lg m-4 border border-[#222] flex flex-col justify-center items-center overflow-auto">
+      <pre className="text-[#9e9e9e] text-left w-full whitespace-pre-wrap p-4">{code || 'Code will appear here'}</pre>
+    </div>
+  );
+  const AgentTimeline = ({ messages }) => (
+    <div className="flex-1 bg-[#121212] overflow-y-auto p-6 space-y-4">
+      {messages.length === 0 ? (
+        <div className="text-center text-[#a8a8a8] mt-20">
+          <h3 className="text-xl font-semibold mb-2 text-[#e0e0e0]">Welcome to MatCoder Playground!</h3>
+          <p className="mb-4">Ask me to perform your MATLAB task, and I'll write code, create simulation, and run it for you.</p>
+          <div className="text-sm bg-[#1e1e1e] rounded-lg p-4 inline-block border border-[#333333]">
+            <p className="font-semibold mb-2 text-[#e0e0e0]">Try asking:</p>
+            <ul className="text-left space-y-1 text-[#a8a8a8] italic">
+              <li>• "Create a simulation of a double pendulum system showing chaotic behavior, and plot its phase space and energy over time."</li>
+              <li>• "Create a simulation of heat diffusion in a 2D plate using the finite difference method with Dirichlet boundary conditions."</li>
+            </ul>
+          </div>
+        </div>
+      ) : (
+        messages.map((msg, idx) => (
+          <div key={idx} className={`text-left ${msg.sender === 'user' ? 'text-[#2563eb]' : 'text-[#e0e0e0]'}`}>{msg.content}</div>
+        ))
+      )}
+    </div>
+  );
+  const SimulationPreview = ({ simulationHtml }) => (
+    <div className="flex-1 bg-[#181818] rounded-lg m-4 border border-[#222] flex flex-col justify-center items-center overflow-auto">
+      <span className="text-[#9e9e9e] text-lg" dangerouslySetInnerHTML={{ __html: simulationHtml || 'Simulation/preview will appear here' }} />
+    </div>
+  );
+  const UserInputArea = ({ onSendMessage, disabled }) => {
+    const [input, setInput] = useState('');
+    return (
+      <div className="flex items-center p-4 bg-[#1a1a1a] border-t border-[#333]">
+        <input
+          className="flex-1 bg-[#232323] text-white rounded-lg px-4 py-2 mr-2 outline-none"
+          type="text"
+          value={input}
+          onChange={e => setInput(e.target.value)}
+          onKeyDown={e => {
+            if (e.key === 'Enter' && input.trim() && !disabled) {
+              onSendMessage(input);
+              setInput('');
+            }
+          }}
+          placeholder="Ask SimWorks to create something..."
+          disabled={disabled}
+        />
+        <button
+          className="bg-[#2563eb] text-white px-4 py-2 rounded-lg disabled:opacity-50"
+          onClick={() => {
+            if (input.trim() && !disabled) {
+              onSendMessage(input);
+              setInput('');
+            }
+          }}
+          disabled={disabled}
+        >
+          Send
+        </button>
+      </div>
+    );
+  };
+
+  return (
+    <div className="flex flex-1 w-full h-full justify-center items-center">
+      {/* Sidebar drawer for mobile (inside playground) */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 flex lg:hidden" onClick={() => setSidebarOpen(false)}>
+          <div className="h-full" onClick={e => e.stopPropagation()}>
+            <PlaygroundSidebarContent sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} recentChats={recentChats} handleSelectChat={handleSelectChat} />
+          </div>
+        </div>
+      )}
+      <div className="flex w-full max-w-6xl h-[80vh] bg-[#0d0d0d] rounded-2xl shadow-xl overflow-hidden border border-[#333]">
+        {/* Sidebar for desktop (flex child, not fixed) */}
+        <div className="hidden lg:flex h-full"> <PlaygroundSidebarContent sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} recentChats={recentChats} handleSelectChat={handleSelectChat} /> </div>
+        {/* Playground content */}
+        <div className="flex-1 flex flex-col">
+          <PlaygroundTopBar tab={tab} setTab={setTab} setSidebarOpen={setSidebarOpen} />
+          <div className="flex flex-col lg:flex-row flex-1 min-h-0">
+            {tab === 'Agent' ? (
+              <>
+                <div className="w-full lg:w-1/2 flex flex-col min-h-0">
+                  <AgentTimeline messages={messages} />
+                  <div ref={messagesEndRef} />
+                </div>
+                <div className="w-full lg:w-1/2 flex flex-col min-h-0 border-t lg:border-t-0 lg:border-l border-[#222]">
+                  <SimulationPreview simulationHtml={simulationHtml} />
+                </div>
+              </>
+            ) : (
+              <div className="w-full flex flex-col min-h-0">
+                <CodeViewer code={code} />
+              </div>
+            )}
+          </div>
+          <div className="w-full">
+            <UserInputArea onSendMessage={handleSendMessage} disabled={loading} />
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const Index = () => {
   // Typewriter effect state
@@ -117,7 +330,7 @@ const Index = () => {
             <div className="hidden md:flex items-center space-x-2">
               <div className="flex items-center space-x-1 bg-gray-800/50 backdrop-blur-lg rounded-full p-1 border border-gray-700">
                 <a href="#features" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Features</a>
-                <a href="#playground" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Playground</a>
+                <Link to="/fullstack-playground" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Playground</Link>
                 <a href="#testimonials" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Reviews</a>
                 <a href="/pricing" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Pricing</a>
               </div>
@@ -197,8 +410,13 @@ const Index = () => {
               Watch MatCoder transform your ideas into simulations. Type anything and see magic happen.
             </p>
           </div>
-          <div className="bg-gray-900 rounded-3xl border border-gray-800 overflow-hidden">
-            <InteractivePlayground />
+          <PlaygroundSection />
+          <div className="flex justify-center mt-8">
+            <Link to="/fullstack-playground">
+              <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
+                Try MatCoder AI Agent -&gt;
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
