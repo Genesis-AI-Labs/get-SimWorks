@@ -164,32 +164,42 @@ const InteractivePlayground = () => {
   };
 
   return (
-    <div className="max-w-full h-[80vh] bg-[#0d0d0d] rounded-2xl shadow-xl overflow-hidden border border-[#333] flex flex-col">
-      <div className="flex flex-1 min-h-0">
-        <PlaygroundSidebar />
-        <div className="flex-1 flex flex-col min-h-0">
-          <PlaygroundTopBar tab={tab} setTab={setTab} />
-          <div className="flex flex-1 min-h-0">
-            {tab === 'Agent' ? (
-              <>
-                <div className="w-1/2 flex flex-col min-h-0">
+    <div className="flex h-[80vh] bg-[#0d0d0d] rounded-2xl shadow-xl overflow-hidden border border-[#333]">
+      {/* Sidebar */}
+      <div className="hidden md:flex w-16 bg-[#181818] border-r border-[#222] flex-col items-center py-4 space-y-4">
+        {/* Example plugin icons (replace with your own) */}
+        <div className="w-10 h-10 bg-[#232323] rounded-xl flex items-center justify-center text-[#2563eb] font-bold text-lg">C</div>
+        <div className="w-10 h-10 bg-[#232323] rounded-xl flex items-center justify-center text-[#eab308] font-bold text-lg">D</div>
+        <div className="w-10 h-10 bg-[#232323] rounded-xl flex items-center justify-center text-[#22d3ee] font-bold text-lg">S</div>
+      </div>
+      {/* Main Content */}
+      <div className="flex-1 flex flex-col">
+        <PlaygroundTopBar tab={tab} setTab={setTab} />
+        <div className="flex flex-col lg:flex-row flex-1 min-h-0">
+          {/* Left Pane (Agent tab) or Full Pane (Code tab) */}
+          {tab === 'Agent' ? (
+            <>
+              <div className="w-full lg:w-1/2 flex flex-col min-h-0">
+                <div className="flex-1 min-h-0 overflow-auto">
                   <AgentTimeline />
                 </div>
-                <div className="w-1/2 flex flex-col min-h-0 border-l border-[#222]">
-                  <SimulationPreview />
-                </div>
-              </>
-            ) : (
-              <div className="w-full flex flex-col min-h-0">
+              </div>
+              <div className="w-full lg:w-1/2 flex flex-col min-h-0 border-t lg:border-t-0 lg:border-l border-[#222]">
+                <SimulationPreview />
+              </div>
+            </>
+          ) : (
+            <div className="w-full flex flex-col min-h-0">
+              <div className="flex-1 min-h-0 overflow-auto">
                 <CodeViewer />
               </div>
-            )}
-          </div>
+            </div>
+          )}
         </div>
-      </div>
-      {/* Bottom input bar */}
-      <div className="border-t border-[#333] bg-[#1a1a1a]">
-        <UserInputArea onSendMessage={handleSendMessage} disabled={agentStatus === 'thinking' || agentStatus === 'generating'} />
+        {/* Input Bar */}
+        <div className="w-full">
+          <UserInputArea onSendMessage={handleSendMessage} disabled={agentStatus === 'thinking' || agentStatus === 'generating'} />
+        </div>
       </div>
     </div>
   );
