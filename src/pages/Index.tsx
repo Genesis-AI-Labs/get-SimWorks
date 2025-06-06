@@ -252,7 +252,7 @@ const PlaygroundSection = () => {
 
 const Index = () => {
   // Typewriter effect state
-  const phrases = ["Matlab Simulations", "Simulink Models", "Model Based Design"];
+  const phrases = ["Matlab Code", "Simulink MBD",];
   const [displayedText, setDisplayedText] = useState("");
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
@@ -350,12 +350,12 @@ const Index = () => {
       <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center gap-16">
-            <div className="md:w-1/2 w-full space-y-8">
+            <div className="md:w-1/2 w-full space-y-8 pr-4 md:pr-12">
               <div className="space-y-4">
                 <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold leading-[1.2]">
                   <span className="block mb-4">Supercharge</span>
                   <span className="block mb-4 text-gray-400">Your</span>
-                  <span className="block h-[1.4em] flex items-center">
+                  <span className="block h-[1.0em] flex items-center" style={{ minWidth: '22ch', fontFamily: 'monospace' }}>
                     <span className="inline-block min-w-[1ch]">{displayedText}</span>
                     <span className="inline-block w-2 h-8 bg-white animate-pulse ml-1"></span>
                   </span>
@@ -365,7 +365,7 @@ const Index = () => {
               Experience the future of Model-Based Design. SimWorks' AI agents transform your natural language instructions into validated MATLAB & Simulink models, algorithms, and simulation results – slashing development time by up to 20x.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="/get-started">
+                <Link to="/fullstack-playground">
                   <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
                     MatCoder AI
                   </Button>
@@ -375,7 +375,7 @@ const Index = () => {
                 </Button>
               </div>
             </div>
-            <div className="md:w-1/2 w-full flex justify-center md:justify-end mt-10 md:mt-0 md:mr-12 mr-0">
+            <div className="md:w-1/2 w-full flex justify-center md:justify-end mt-10 md:mt-0 md:mr-12 mr-0 md:pl-2">
               <img 
                 src="/animation_mesh_240_c24.gif" 
                 alt="Animated Mesh" 
