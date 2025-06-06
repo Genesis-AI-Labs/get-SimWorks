@@ -352,10 +352,13 @@ const Index = () => {
           <div className="flex flex-col md:flex-row items-center gap-16">
             <div className="md:w-1/2 w-full space-y-8">
               <div className="space-y-4">
-                <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold leading-tight">
-                  <span className="block">Supercharge</span>
-                  <span className="block text-gray-400">Your</span>
-                  <span className="block min-h-[1em]">{displayedText}&nbsp;<span className="inline-block w-2 h-8 bg-white align-middle animate-pulse" style={{ verticalAlign: 'middle' }}></span></span>
+                <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold leading-[1.2]">
+                  <span className="block mb-4">Supercharge</span>
+                  <span className="block mb-4 text-gray-400">Your</span>
+                  <span className="block h-[1.4em] flex items-center">
+                    <span className="inline-block min-w-[1ch]">{displayedText}</span>
+                    <span className="inline-block w-2 h-8 bg-white animate-pulse ml-1"></span>
+                  </span>
                 </h1>
               </div>
               <p className="text-xl text-gray-400 leading-relaxed">
@@ -385,7 +388,7 @@ const Index = () => {
       </section>
 
       {/* Trusted Partners Carousel */}
-      <section className="py-12 relative z-10 border-y border-gray-800">
+      {/* <section className="py-12 relative z-10 border-y border-gray-800">
         <div className="max-w-7xl mx-auto">
           <div className="flex items-center justify-center space-x-16 opacity-50">
             <div className="text-gray-400 text-sm font-medium">Trusted by</div>
@@ -393,12 +396,12 @@ const Index = () => {
               <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
               <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
               <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Microsoft" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
-              <img src="https://cdn.svgporn.com/logos/aws.svg" alt="AWS" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
+              <img src="https://logowik.com/content/uploads/images/647_toyota.jpg" alt="AWS" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
               <img src="https://cdn.svgporn.com/logos/salesforce.svg" alt="Salesforce" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Interactive Playground */}
       <section id="playground" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
