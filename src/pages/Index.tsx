@@ -261,6 +261,11 @@ const Index = () => {
   const [testimonialIdx, setTestimonialIdx] = useState(0);
   const visibleCount = 3;
 
+  // Scroll to top on mount to prevent auto-scrolling
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   useEffect(() => {
     let timeout: NodeJS.Timeout;
 
@@ -368,6 +373,11 @@ const Index = () => {
               Experience the future of Model-Based Design. SimWorks' AI agents transform your natural language instructions into validated MATLAB & Simulink models, algorithms, and simulation results – slashing development time by up to 20x.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
+                <Link to="https://github.com/simworks-ai/OctCoder">
+                  <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
+                    Try OctCoder
+                  </Button>
+                </Link>
                 <Link to="/fullstack-playground">
                   <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
                     MatCoder AI

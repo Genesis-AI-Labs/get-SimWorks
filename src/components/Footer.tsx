@@ -44,7 +44,7 @@ const Footer = () => {
               <li><Link to="#" className="text-gray-400 hover:text-white transition-colors duration-300 text-base">SimCoder AI (Coming Soon)</Link></li>
               <li><Link to="#" className="text-gray-400 hover:text-white transition-colors duration-300 text-base">CfdCoder AI (Coming Soon)</Link></li>
               {/* <li><Link to="#" className="text-gray-400 hover:text-white transition-colors duration-300 text-base">CadCoder AI</Link></li> */}
-              <li><Link to="/fullstack-playground" className="text-gray-400 hover:text-white transition-colors duration-300 text-base">OctCoder Playground</Link></li>
+              <li><Link to="https://github.com/simworks-ai/OctCoder" className="text-gray-400 hover:text-white transition-colors duration-300 text-base">OctCoder Playground</Link></li>
             </ul>
           </div>
 
