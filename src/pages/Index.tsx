@@ -5,6 +5,7 @@ import InteractivePlayground from "@/components/InteractivePlayground";
 import TestimonialCard from "@/components/TestimonialCard";
 import FeatureCard from "@/components/FeatureCard";
 import BenefitCard from "@/components/BenefitCard";
+import Footer from "@/components/Footer";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { createClient } from '@supabase/supabase-js';
@@ -531,21 +532,7 @@ const Index = () => {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-800 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row justify-between items-center">
-            <div className="flex items-center space-x-8 mb-4 md:mb-0">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">About</a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">Contact</a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">Terms</a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors duration-300">Privacy</a>
-            </div>
-            <p className="text-gray-500 text-sm">
-              © 2024 SimWorks. Crafting the future.
-            </p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };

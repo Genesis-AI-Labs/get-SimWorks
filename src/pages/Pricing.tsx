@@ -53,7 +53,7 @@ const Pricing = () => {
           {/* Open Source */}
           <div className="flex-1 bg-white/95 text-black rounded-3xl shadow-lg p-8 flex flex-col border border-gray-200 min-w-[320px] max-w-md">
             <h2 className="text-3xl font-bold mb-2">Open Source</h2>
-            <p className="mb-6 text-gray-700">For Hackers, hobbyists, FOSS projects that run Cua locally or on their own cloud.</p>
+            <p className="mb-6 text-gray-700">For Hackers, hobbyists, FOSS projects that run M locally or on their own cloud.</p>
             <div className="text-4xl font-bold mb-8">Free</div>
             <div className="mb-8">
               <div className="text-lg font-semibold mb-2">What's included</div>
