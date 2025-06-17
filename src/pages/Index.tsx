@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { ArrowRight, Code, Zap, Users, Layers, Smartphone, Globe, Star, Menu, X, Puzzle } from "lucide-react";
+import { ArrowRight, Code, Zap, Users, Layers, Smartphone, Globe, Star, Menu, X, Puzzle, ChevronUp, ChevronDown } from "lucide-react";
 import InteractivePlayground from "@/components/InteractivePlayground";
 import TestimonialCard from "@/components/TestimonialCard";
 import FeatureCard from "@/components/FeatureCard";
@@ -9,6 +9,7 @@ import Footer from "@/components/Footer";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { createClient } from '@supabase/supabase-js';
+import HoverDropdown from "@/components/HoverDropdown";
 
 const testimonials = [
   {
@@ -319,6 +320,9 @@ const Index = () => {
     return arr;
   };
 
+  const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
+  const [researchDropdownOpen, setResearchDropdownOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden relative">
       {/* Navigation */}
@@ -338,9 +342,59 @@ const Index = () => {
             
             <div className="hidden md:flex items-center space-x-2">
               <div className="flex items-center space-x-1 bg-gray-800/50 backdrop-blur-lg rounded-full p-1 border border-gray-700">
-                <a href="#features" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Features</a>
+                {/* Products Dropdown */}
+                <HoverDropdown
+                  trigger={(isOpen) => (
+                    <a href="#" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105 flex items-center">
+                      Products <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                    </a>
+                  )}
+                  content={
+                    <>
+                      <div className="grid grid-cols-1 gap-8">
+                        {/* Products Section */}
+                        <div>
+                          <h4 className="text-xs font-semibold uppercase text-gray-500 mb-3">PRODUCTS</h4>
+                          <ul className="space-y-3">
+                            <li>
+                              <Link to="#" className="block text-white hover:text-blue-400 transition-colors duration-300">
+                                <p className="font-semibold text-base">MatCoder AI</p>
+                                <p className="text-gray-400 text-sm">Matlab scripting agents</p>
+                              </Link>
+                            </li>
+                            <li>
+                              <Link to="#" className="block text-white hover:text-blue-400 transition-colors duration-300">
+                                <p className="font-semibold text-base">SimCoder AI</p>
+                                <p className="text-gray-400 text-sm">Automated Model Based Design</p>
+                              </Link>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </>
+                  }
+                  minWidth="300px"
+                />
                 <Link to="/fullstack-playground" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Playground</Link>
-                <a href="#testimonials" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Reviews</a>
+                {/* Research Dropdown */}
+                <HoverDropdown
+                  trigger={(isOpen) => (
+                    <a href="#" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105 flex items-center">
+                      Research <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
+                    </a>
+                  )}
+                  content={
+                    <ul className="space-y-3">
+                      <li>
+                        <Link to="https://github.com/simworks-ai/OctCoder" className="block text-white hover:text-blue-400 transition-colors duration-300">
+                          <p className="font-semibold text-base">OctCoder</p>
+                          <p className="text-gray-400 text-sm">Open-source Octave Simulation Agents</p>
+                        </Link>
+                      </li>
+                    </ul>
+                  }
+                  minWidth="200px"
+                />
                 <a href="/pricing" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Pricing</a>
               </div>
             </div>
@@ -427,7 +481,27 @@ const Index = () => {
               Watch MatCoder transform your ideas into simulations. Type anything and see magic happen.
             </p>
           </div>
-          <PlaygroundSection />
+          <div className="flex flex-1 w-full h-full justify-center items-center">
+            <div className="w-full max-w-6xl h-[80vh] rounded-2xl shadow-2xl overflow-hidden relative">
+              {/* Gradient Background */}
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500 animate-gradient-x opacity-80"></div>
+              {/* Glow Effect */}
+              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-amber-500 blur-3xl opacity-50"></div>
+              {/* Video Container */}
+              <div className="relative z-10 w-full h-full flex items-center justify-center p-4">
+                <video 
+                  className="w-full h-full object-contain bg-[#0d0d0d] rounded-xl border border-[#333]"
+                  controls
+                  autoPlay
+                  muted
+                  loop
+                >
+                  <source src="/simworks_demo_v0.mp4" type="video/mp4" />
+                  Your browser does not support the video tag.
+                </video>
+              </div>
+            </div>
+          </div>
           <div className="flex justify-center mt-8">
             <Link to="/fullstack-playground">
               <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
@@ -438,8 +512,8 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Features Section */}
-      <section id="features" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Products Section */}
+      <section id="Products" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl sm:text-6xl font-bold mb-6 text-white">
@@ -452,7 +526,7 @@ const Index = () => {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="md:col-span-2">
-              <div className="bg-gray-900 rounded-3xl p-8 border border-gray-800 h-full hover:scale-105 transition-all duration-500 group flex flex-col">
+              <div className="bg-gradient-to-br from-gray-900 to-black rounded-3xl p-8 border border-gray-800 h-full hover:scale-105 transition-all duration-500 group flex flex-col shadow-2xl">
                 <div className="flex items-center mb-6">
                   <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mr-4">
                     <Zap className="w-6 h-6 text-black" />
@@ -469,7 +543,7 @@ const Index = () => {
             </div>
             
             <div className="space-y-8">
-              <div className="bg-gray-900 rounded-3xl p-6 border border-gray-800 hover:scale-105 transition-all duration-500 group">
+              <div className="bg-gradient-to-br from-gray-900 to-black rounded-3xl p-6 border border-gray-800 hover:scale-105 transition-all duration-500 group shadow-2xl">
                 <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center mb-4">
                   <Globe className="w-5 h-5 text-black" />
                 </div>
@@ -477,7 +551,7 @@ const Index = () => {
                 <p className="text-gray-400 text-sm">Computer Use AI agents write, optimize, and debug sophisticated algorithms tailored for your specific MBD tasks, minimizing errors and freeing your engineers for high-level innovation.</p>
               </div>
               
-              <div className="bg-gray-900 rounded-3xl p-6 border border-gray-800 hover:scale-105 transition-all duration-500 group">
+              <div className="bg-gradient-to-br from-gray-900 to-black rounded-3xl p-6 border border-gray-800 hover:scale-105 transition-all duration-500 group shadow-2xl">
                 <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center mb-4">
                   <Layers className="w-5 h-5 text-black" />
                 </div>
@@ -486,7 +560,7 @@ const Index = () => {
               </div>
 
               {/* CadCoder Card */}
-              <div className="bg-gray-900 rounded-3xl p-6 border border-gray-800 hover:scale-105 transition-all duration-500 group">
+              <div className="bg-gradient-to-br from-gray-900 to-black rounded-3xl p-6 border border-gray-800 hover:scale-105 transition-all duration-500 group shadow-2xl">
                 <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center mb-4">
                   {/* Placeholder for CadCoder Icon */}
                   <span className="text-black text-lg font-bold">CAD</span>
@@ -500,7 +574,7 @@ const Index = () => {
       </section>
 
       {/* Testimonials */}
-      <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl sm:text-6xl font-bold mb-6 text-white">
@@ -522,11 +596,11 @@ const Index = () => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* CTA */}
-      <section className="py-32 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-4xl mx-auto text-center">
+      <section className="py-32 px-4 sm:px-6 lg:px-8 relative z-10 bg-black">
+        <div className="max-w-4xl mx-auto text-center relative z-20">
           <h2 className="text-6xl sm:text-7xl font-bold mb-8 text-white leading-tight">
             Ready to Create the Impossible?
           </h2>
