@@ -342,60 +342,14 @@ const Index = () => {
             
             <div className="hidden md:flex items-center space-x-2">
               <div className="flex items-center space-x-1 bg-gray-800/50 backdrop-blur-lg rounded-full p-1 border border-gray-700">
-                {/* Products Dropdown */}
-                <HoverDropdown
-                  trigger={(isOpen) => (
-                    <a href="#" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105 flex items-center">
-                      Products <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
-                    </a>
-                  )}
-                  content={
-                    <>
-                      <div className="grid grid-cols-1 gap-8">
-                        {/* Products Section */}
-                        <div>
-                          <h4 className="text-xs font-semibold uppercase text-gray-500 mb-3">PRODUCTS</h4>
-                          <ul className="space-y-3">
-                            <li>
-                              <Link to="#" className="block text-white hover:text-blue-400 transition-colors duration-300">
-                                <p className="font-semibold text-base">MatCoder AI</p>
-                                <p className="text-gray-400 text-sm">Matlab scripting agents</p>
-                              </Link>
-                            </li>
-                            <li>
-                              <Link to="#" className="block text-white hover:text-blue-400 transition-colors duration-300">
-                                <p className="font-semibold text-base">SimCoder AI</p>
-                                <p className="text-gray-400 text-sm">Automated Model Based Design</p>
-                              </Link>
-                            </li>
-                          </ul>
-                        </div>
-                      </div>
-                    </>
-                  }
-                  minWidth="300px"
-                />
-                <Link to="/fullstack-playground" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Playground</Link>
-                {/* Research Dropdown */}
-                <HoverDropdown
-                  trigger={(isOpen) => (
-                    <a href="#" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105 flex items-center">
-                      Research <ChevronDown className={`ml-1 h-4 w-4 transition-transform duration-300 ${isOpen ? 'rotate-180' : ''}`} />
-                    </a>
-                  )}
-                  content={
-                    <ul className="space-y-3">
-                      <li>
-                        <Link to="https://github.com/simworks-ai/OctCoder" className="block text-white hover:text-blue-400 transition-colors duration-300">
-                          <p className="font-semibold text-base">OctCoder</p>
-                          <p className="text-gray-400 text-sm">Open-source Octave Simulation Agents</p>
-                        </Link>
-                      </li>
-                    </ul>
-                  }
-                  minWidth="200px"
-                />
-                <a href="/pricing" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Pricing</a>
+                {/* Products Link */}
+                <a href="#Products" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Products</a>
+                {/* Playground Link */}
+                <a href="#playground" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Playground</a>
+                {/* Research Link */}
+                <a href="#research" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Research</a>
+                {/* Pricing Link */}
+                <a href="#pricing" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Pricing</a>
               </div>
             </div>
             
@@ -461,7 +415,7 @@ const Index = () => {
             <div className="text-gray-400 text-sm font-medium">Trusted by</div>
             <div className="flex items-center space-x-16">
               <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo.svg" alt="IBM" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
+              <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo_%282012%29.svg" alt="IBM" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
               <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Microsoft" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
               <img src="https://logowik.com/content/uploads/images/647_toyota.jpg" alt="AWS" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
               <img src="https://cdn.svgporn.com/logos/salesforce.svg" alt="Salesforce" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
@@ -482,7 +436,7 @@ const Index = () => {
             </p>
           </div>
           <div className="flex flex-1 w-full h-full justify-center items-center">
-            <div className="w-full max-w-6xl h-[80vh] rounded-2xl shadow-2xl overflow-hidden relative">
+            <div className="w-full max-w-7xl h-[80vh] rounded-2xl shadow-2xl overflow-hidden relative mx-auto">
               {/* Gradient Background */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500 animate-gradient-x opacity-80"></div>
               {/* Glow Effect */}
@@ -513,60 +467,147 @@ const Index = () => {
       </section>
 
       {/* Products Section */}
-      <section id="Products" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section id="Products" className="py-12 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
+          <div className="text-center mb-8">
             <h2 className="text-5xl sm:text-6xl font-bold mb-6 text-white">
               Simulations Beyond Boundaries
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            Revolutionary AI tools that automate the entire design, simulation, and validation lifecycle for STEM Engineers.
+            SimWorks Agentic Suite that automate the entire design, simulation, and validation lifecycle for STEM Engineers.
             </p>
           </div>
-          
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="md:col-span-2">
-              <div className="bg-gradient-to-br from-gray-900 to-black rounded-3xl p-8 border border-gray-800 h-full hover:scale-105 transition-all duration-500 group flex flex-col shadow-2xl">
-                <div className="flex items-center mb-6">
-                  <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mr-4">
-                    <Zap className="w-6 h-6 text-black" />
+            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+              {/* MatCoder Card */}
+              <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[260px] shadow-lg group overflow-hidden transition-colors duration-500">
+                {/* Gradient Overlay for Hover */}
+                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
+                <div className="text-gray-300 text-sm mb-8 z-10 relative">From natural language prompts to full Matlab processing pipelines, visualizations, and computations. What used to take weeks now happens in hours, sometimes minutes.</div>
+                <div className="mt-auto text-2xl font-bold text-white z-10 relative">MatCoder</div>
+              </div>
+              {/* Visualize the Impossible Card (SimCoder) */}
+              <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[260px] shadow-lg group overflow-hidden transition-colors duration-500">
+                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
+                <div className="text-gray-300 text-sm mb-8 z-10 relative">Step beyond the ordinary with designs that defy conventions. Our AI conjures up imaginative visuals that push the boundaries of creativity.</div>
+                <div className="mt-auto text-2xl font-bold text-white z-10 relative">SimCoder</div>
+              </div>
+            </div>
+            <div className="flex flex-col gap-8">
+              {/* Synergy and Style Card (CfdCoder) */}
+              <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[180px] shadow-lg group overflow-hidden transition-colors duration-500">
+                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
+                <div className="text-gray-300 text-sm mb-8 z-10 relative">Experience the perfect blend of form and function. Our AI ensures that every design not only looks stunning but also serves its purpose flawlessly.</div>
+                <div className="mt-auto text-2xl font-bold text-white z-10 relative">CfdCoder</div>
+              </div>
+              {/* Timeless Precision Card (CadCoder) */}
+              <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[180px] shadow-lg group overflow-hidden transition-colors duration-500">
+                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
+                <div className="text-gray-300 text-sm mb-8 z-10 relative">Embrace the elegance of meticulously crafted designs. Our AI polishes every detail to bring a timeless quality to your creative projects.</div>
+                <div className="mt-auto text-2xl font-bold text-white z-10 relative">CadCoder</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Research Section */}
+      <section id="research" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-5xl sm:text-6xl font-bold mb-12 text-center text-white">SimWorks Research</h2>
+          <div className="flex flex-col md:flex-row items-center md:items-stretch gap-4">
+            {/* Left side: placeholder for future content */}
+            <div className="flex-1 flex flex-col justify-center items-start mb-8 md:mb-0">
+              <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-white">Advancing Agentic Systems for Simulations</h2>
+              <p className="text-lg text-gray-300 mb-8 max-w-lg">We value continuous research and innovation in our agentic systems. Our research is focused on the development and evaluation of AI agents for industry-grade simulations. We support research labs in utilizing our state-of-the-art AI agents in their ecosystem to produce their own simulation-based research.</p>
+              <button className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-8 py-3 rounded-xl text-lg transition">Learn More</button>
+            </div>
+            {/* Right side: Research card styled like product cards, empty for user content */}
+            <div className="flex-1 flex items-center justify-center">
+              <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[260px] shadow-lg group overflow-hidden transition-colors duration-500 w-full max-w-md">
+                {/* Gradient Overlay for Hover */}
+                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
+                {/* Card body left empty for user content */}
+                 <div className="text-gray-300 text-sm mb-8 z-10 relative">OctCoder is an agentic framework that simplifies simulation creation and execution in GNU Octave. It uses natural language inputs to generate, run, and summarize simulations via interconnected AI agents. A user-friendly Gradio web interface enables seamless interaction.</div>
+                <div className="mt-auto text-2xl font-bold text-white z-10 relative">OctCoder</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Pricing Section */}
+      <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-5xl sm:text-6xl font-bold mb-4 text-white">Pricing</h2>
+          </div>
+          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Open Source Plan */}
+            <div className="relative bg-[#23242a] rounded-2xl p-8 flex flex-col shadow-md min-h-[600px]">
+              <div className="text-3xl font-bold text-white mb-2">Open Source</div>
+              <div className="text-base text-white mb-8">For Hackers, hobbyists, FOSS projects that run Cua locally or on their own cloud.</div>
+              <div className="text-4xl font-bold text-white mb-12">Free</div>
+              <div className="mt-auto">
+                <div className="text-white font-semibold mb-4">What's included</div>
+                <ul className="space-y-3 mb-8">
+                  <li className="flex items-center gap-3 text-white"><span className="inline-block w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#A3A3A3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>AGPL-3.0 license Core</li>
+                  <li className="flex items-center gap-3 text-white"><span className="inline-block w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#A3A3A3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Unlimited Local Agents</li>
+                  <li className="flex items-center gap-3 text-white"><span className="inline-block w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#A3A3A3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Community Discord and Docs</li>
+                </ul>
+                <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="w-full bg-white text-blue-600 rounded-full py-3 font-semibold shadow hover:bg-blue-50 transition text-lg flex items-center justify-center gap-2"><span>Get Started</span></a>
+              </div>
+            </div>
+            {/* Pro Plan */}
+            <div className="relative rounded-2xl p-0 flex flex-col shadow-2xl min-h-[600px] overflow-hidden text-white border-2 border-blue-500 bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500">
+              {/* Most Popular badge */}
+              <div className="absolute top-6 right-6 bg-white text-blue-600 text-xs font-bold px-4 py-1 rounded-full shadow">Most Popular</div>
+              <div className="p-8 flex flex-col flex-1">
+                <div className="text-3xl font-bold mb-2">Team</div>
+                <div className="text-base mb-6">Teams that want hosted agents with no infrastructure headaches.</div>
+                <div className="text-5xl font-bold mb-2">$75</div>
+                <div className="mb-4"><span className="inline-block bg-white/90 text-green-600 font-semibold px-4 py-1 rounded-full text-sm">-0% discount applied</span></div>
+                {/* Slider */}
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-white/80 text-sm font-semibold">$75</span>
+                  <div className="flex-1 mx-2 flex items-center gap-2">
+                    <span className="w-4 h-4 bg-white rounded-full border-2 border-blue-400" />
+                    <span className="w-4 h-4 bg-white/30 rounded-full border-2 border-blue-400" />
+                    <span className="w-4 h-4 bg-white/30 rounded-full border-2 border-blue-400" />
+                    <span className="w-4 h-4 bg-white/30 rounded-full border-2 border-blue-400" />
+                    <span className="w-4 h-4 bg-white/30 rounded-full border-2 border-blue-400" />
                   </div>
-                  <h3 className="text-2xl font-bold">MatCoder</h3>
+                  <span className="text-white/80 text-sm font-semibold">$1000</span>
                 </div>
-                <p className="text-gray-400 text-lg leading-relaxed mb-6">
-                {/* From natural language prompts to full Matlab processing pipelines, visualizations, and computations. What used to take weeks now happens in hours, sometimes minutes. */}
-                </p>
-                <div className="flex justify-center items-center flex-grow">
-                  <img src="/matcoder_simple.png" alt="MatCoder Simple Diagram" className="w-full h-full" />
+                <div className="text-lg font-bold mb-1">5,100 credits</div>
+                <div className="text-white/80 text-sm mb-8">425h typical runtime</div>
+                <div className="mt-auto">
+                  <div className="text-white/80 font-semibold mb-4">What's included</div>
+                  <ul className="space-y-3 mb-8">
+                    <li className="flex items-center gap-3"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Complete access to SOTA SimWorks Agents, we support (macOS, Linux, Windows)</li>
+                    <li className="flex items-center gap-3"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Usage metered in universal credits</li>
+                    <li className="flex items-center gap-3"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Email and Slack support</li>
+                  </ul>
+                  <a href="https://cal.com/get-simworks/30min" target="_blank" rel="noopener noreferrer" className="w-full bg-white text-blue-600 rounded-full py-3 font-semibold shadow hover:bg-blue-50 transition text-lg flex items-center justify-center gap-2"><span>Purchase Credits</span></a>
                 </div>
               </div>
             </div>
-            
-            <div className="space-y-8">
-              <div className="bg-gradient-to-br from-gray-900 to-black rounded-3xl p-6 border border-gray-800 hover:scale-105 transition-all duration-500 group shadow-2xl">
-                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center mb-4">
-                  <Globe className="w-5 h-5 text-black" />
-                </div>
-                <h3 className="text-xl font-bold mb-2">SimCoder</h3>
-                <p className="text-gray-400 text-sm">Computer Use AI agents write, optimize, and debug sophisticated algorithms tailored for your specific MBD tasks, minimizing errors and freeing your engineers for high-level innovation.</p>
+            {/* Enterprise Plan */}
+            <div className="relative rounded-2xl p-0 flex flex-col shadow-md min-h-[600px] overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500 text-white">
+              <div className="p-8">
+                <div className="text-3xl font-bold text-white mb-2">Enterprise</div>
+                <div className="text-base text-white">Custom cloud services — contact sales for a quote.</div>
               </div>
-              
-              <div className="bg-gradient-to-br from-gray-900 to-black rounded-3xl p-6 border border-gray-800 hover:scale-105 transition-all duration-500 group shadow-2xl">
-                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center mb-4">
-                  <Layers className="w-5 h-5 text-black" />
+              <div className="flex-1 flex flex-col p-8 pt-4">
+                <div className="mt-auto">
+                  <div className="text-white font-semibold mb-4">What's included</div>
+                  <ul className="space-y-3 mb-8">
+                    <li className="flex items-center gap-3 text-white"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Everything in Pro</li>
+                    <li className="flex items-center gap-3 text-white"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>24/7 support</li>
+                    <li className="flex items-center gap-3 text-white"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>HIPAA, SOC Type 1/2 Reports</li>
+                  </ul>
+                  <a href="https://cal.com/get-simworks/30min" target="_blank" rel="noopener noreferrer" className="w-full bg-white text-blue-600 rounded-full py-3 font-semibold shadow hover:bg-blue-50 transition text-lg flex items-center justify-center gap-2"><span>Book a Demo</span><svg xmlns='http://www.w3.org/2000/svg' className='inline-block ml-1' width='20' height='20' fill='none' viewBox='0 0 24 24'><rect x='3' y='4' width='18' height='18' rx='4' fill='none' stroke='#000' strokeWidth='2'/><path d='M16 2v4M8 2v4M3 10h18' stroke='#000' strokeWidth='2' strokeLinecap='round'/></svg></a>
                 </div>
-                <h3 className="text-xl font-bold mb-2">CfdCoder</h3>
-                <p className="text-gray-400 text-sm">Agents that auto-adapt to your CFD simulation solver like OpenFoam</p>
-              </div>
-
-              {/* CadCoder Card */}
-              <div className="bg-gradient-to-br from-gray-900 to-black rounded-3xl p-6 border border-gray-800 hover:scale-105 transition-all duration-500 group shadow-2xl">
-                <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center mb-4">
-                  {/* Placeholder for CadCoder Icon */}
-                  <span className="text-black text-lg font-bold">CAD</span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">CadCoder</h3>
-                <p className="text-gray-400 text-sm">AI agents for CAD design and automation (details to come).</p>
               </div>
             </div>
           </div>
