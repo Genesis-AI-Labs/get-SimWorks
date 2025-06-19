@@ -378,7 +378,8 @@ const Index = () => {
                 </h1>
               </div>
               <p className="text-xl text-gray-400 leading-relaxed">
-              Experience the future of Model-Based Design. SimWorks' AI agents transform your natural language instructions into validated MATLAB & Simulink models, algorithms, and simulation results – slashing development time by up to 20x.
+              Experience the future of industry-grade simulations at scale.
+              SimWorks’ AI agents turn natural language instructions into validated MATLAB & Simulink models, algorithms, and simulation results — cutting development time by up to 20×.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="https://github.com/simworks-ai/OctCoder">
