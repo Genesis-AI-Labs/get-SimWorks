@@ -379,7 +379,7 @@ const Index = () => {
               </div>
               <p className="text-xl text-gray-400 leading-relaxed">
               Experience the future of industry-grade simulations at scale.
-              SimWorks’ AI agents turn natural language instructions into validated MATLAB & Simulink models, algorithms, and simulation results — cutting development time by up to 20×.
+              SimWorks' AI agents turn natural language instructions into validated MATLAB & Simulink models, algorithms, and simulation results — cutting development time by up to 20×.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="https://github.com/simworks-ai/OctCoder">
@@ -521,17 +521,21 @@ const Index = () => {
             <div className="flex-1 flex flex-col justify-center items-start mb-8 md:mb-0">
               <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-white">Advancing Agentic Systems for Simulations</h2>
               <p className="text-lg text-gray-300 mb-8 max-w-lg">We value continuous research and innovation in our agentic systems. Our research is focused on the development and evaluation of AI agents for industry-grade simulations. We support research labs in utilizing our state-of-the-art AI agents in their ecosystem to produce their own simulation-based research.</p>
-              <button className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-8 py-3 rounded-xl text-lg transition">Learn More</button>
+              <Link to="/get-started">
+                <button className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-8 py-3 rounded-xl text-lg transition">Apply for SimWorks Research Program</button>
+              </Link>
             </div>
             {/* Right side: Research card styled like product cards, empty for user content */}
             <div className="flex-1 flex items-center justify-center">
-              <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[260px] shadow-lg group overflow-hidden transition-colors duration-500 w-full max-w-md">
-                {/* Gradient Overlay for Hover */}
-                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
-                {/* Card body left empty for user content */}
-                 <div className="text-gray-300 text-sm mb-8 z-10 relative">OctCoder is an agentic framework that simplifies simulation creation and execution in GNU Octave. It uses natural language inputs to generate, run, and summarize simulations via interconnected AI agents. A user-friendly Gradio web interface enables seamless interaction.</div>
-                <div className="mt-auto text-2xl font-bold text-white z-10 relative">OctCoder</div>
-              </div>
+              <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="w-full max-w-md">
+                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[260px] shadow-lg group overflow-hidden transition-colors duration-500 w-full max-w-md cursor-pointer hover:ring-2 hover:ring-blue-500 focus:outline-none">
+                  {/* Gradient Overlay for Hover */}
+                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
+                  {/* Card body left empty for user content */}
+                  <div className="text-gray-300 text-sm mb-8 z-10 relative">OctCoder is an agentic framework that simplifies simulation creation and execution in GNU Octave. It uses natural language inputs to generate, run, and summarize simulations via interconnected AI agents. A user-friendly Gradio web interface enables seamless interaction.</div>
+                  <div className="mt-auto text-2xl font-bold text-white z-10 relative">OctCoder</div>
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -545,7 +549,7 @@ const Index = () => {
           </div>
           <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
             {/* Open Source Plan */}
-            <div className="relative bg-[#23242a] rounded-2xl p-8 flex flex-col shadow-md min-h-[600px]">
+            <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="relative bg-[#23242a] rounded-2xl p-8 flex flex-col shadow-md min-h-[600px] transition hover:ring-2 hover:ring-blue-500 focus:outline-none cursor-pointer">
               <div className="text-3xl font-bold text-white mb-2">Open Source</div>
               <div className="text-base text-white mb-8">For Hackers, hobbyists, FOSS projects that run Cua locally or on their own cloud.</div>
               <div className="text-4xl font-bold text-white mb-12">Free</div>
@@ -558,7 +562,7 @@ const Index = () => {
                 </ul>
                 <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="w-full bg-white text-blue-600 rounded-full py-3 font-semibold shadow hover:bg-blue-50 transition text-lg flex items-center justify-center gap-2"><span>Get Started</span></a>
               </div>
-            </div>
+            </a>
             {/* Pro Plan */}
             <div className="relative rounded-2xl p-0 flex flex-col shadow-2xl min-h-[600px] overflow-hidden text-white border-2 border-blue-500 bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500">
               {/* Most Popular badge */}
