@@ -585,9 +585,11 @@ const Index = () => {
           <div className="text-center mb-12">
             <h2 className="text-5xl sm:text-6xl font-bold mb-4 text-white">Pricing</h2>
           </div>
-          <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Open Source Plan */}
-            <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="relative bg-[#23242a] rounded-2xl p-8 flex flex-col shadow-md min-h-[600px] transition hover:ring-2 hover:ring-blue-500 focus:outline-none cursor-pointer">
+          <div className="relative max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Rectangle blur overlay spanning all cards, now in front */}
+            <div className="absolute inset-0 w-full h-full backdrop-blur-md bg-black/70 z-40" style={{ borderRadius: 0 }}></div>
+            {/* Pricing Cards (unchanged) */}
+            <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="relative bg-[#23242a] rounded-2xl p-8 flex flex-col shadow-md min-h-[600px] transition hover:ring-2 hover:ring-blue-500 focus:outline-none cursor-pointer z-30">
               <div className="text-3xl font-bold text-white mb-2">Open Source</div>
               <div className="text-base text-white mb-8">For Hackers, hobbyists, FOSS projects that run Cua locally or on their own cloud.</div>
               <div className="text-4xl font-bold text-white mb-12">Free</div>
@@ -601,8 +603,7 @@ const Index = () => {
                 <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="w-full bg-white text-blue-600 rounded-full py-3 font-semibold shadow hover:bg-blue-50 transition text-lg flex items-center justify-center gap-2"><span>Get Started</span></a>
               </div>
             </a>
-            {/* Pro Plan */}
-            <div className="relative rounded-2xl p-0 flex flex-col shadow-2xl min-h-[600px] overflow-hidden text-white border-2 border-blue-500 bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500">
+            <div className="relative rounded-2xl p-0 flex flex-col shadow-2xl min-h-[600px] overflow-hidden text-white border-2 border-blue-500 bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500 z-30">
               {/* Most Popular badge */}
               <div className="absolute top-6 right-6 bg-white text-blue-600 text-xs font-bold px-4 py-1 rounded-full shadow">Most Popular</div>
               <div className="p-8 flex flex-col flex-1">
@@ -635,8 +636,7 @@ const Index = () => {
                 </div>
               </div>
             </div>
-            {/* Enterprise Plan */}
-            <div className="relative rounded-2xl p-0 flex flex-col shadow-md min-h-[600px] overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500 text-white">
+            <div className="relative rounded-2xl p-0 flex flex-col shadow-md min-h-[600px] overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500 text-white z-30">
               <div className="p-8">
                 <div className="text-3xl font-bold text-white mb-2">Enterprise</div>
                 <div className="text-base text-white">Custom cloud services — contact sales for a quote.</div>
@@ -652,6 +652,13 @@ const Index = () => {
                   <a href="https://cal.com/get-simworks/30min" target="_blank" rel="noopener noreferrer" className="w-full bg-white text-blue-600 rounded-full py-3 font-semibold shadow hover:bg-blue-50 transition text-lg flex items-center justify-center gap-2"><span>Book a Demo</span><svg xmlns='http://www.w3.org/2000/svg' className='inline-block ml-1' width='20' height='20' fill='none' viewBox='0 0 24 24'><rect x='3' y='4' width='18' height='18' rx='4' fill='none' stroke='#000' strokeWidth='2'/><path d='M16 2v4M8 2v4M3 10h18' stroke='#000' strokeWidth='2' strokeLinecap='round'/></svg></a>
                 </div>
               </div>
+            </div>
+            {/* Centered button on top of blur */}
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 flex flex-col items-center justify-center w-full">
+              <button className="bg-white text-black font-semibold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-gray-100 transition-all duration-200 flex items-center gap-2 pointer-events-auto">
+                Get Simmy, Its Free :)
+                <span className="ml-1">→</span>
+              </button>
             </div>
           </div>
         </div>
