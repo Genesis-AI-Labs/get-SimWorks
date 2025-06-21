@@ -6,9 +6,9 @@ const Footer = () => {
     <footer className="bg-black py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-800 relative z-10">
       <div className="max-w-7xl mx-auto">
         {/* Schedule a Call Block */}
-        <div className="flex flex-col md:flex-row items-center justify-between bg-white text-black py-2 px-8 rounded-xl mb-12 max-w-5xl mx-auto">
+        <div className="flex flex-col md:flex-row items-center justify-between bg-black text-white py-2 px-8 rounded-xl mb-12 max-w-5xl mx-auto">
           <div className="text-center md:text-left mb-6 md:mb-0">
-            <h2 className="text-3xl font-bold mb-2 text-black">Ready to Automate Simulation Workflows That Scale?</h2>
+            <h2 className="text-3xl font-bold mb-2 text-white">Ready to Automate Simulation Workflows That Scale?</h2>
             {/* <p className="text-gray-600 text-base">Schedule a call with our team to learn how Neumann AI can transform your Model-Based Design infrastructure.</p> */}
           </div>
           <a
