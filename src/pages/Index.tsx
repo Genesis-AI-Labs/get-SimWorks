@@ -10,10 +10,11 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { createClient } from '@supabase/supabase-js';
 import HoverDropdown from "@/components/HoverDropdown";
+import styles from './Index.module.css';
 
 const testimonials = [
   {
-    quote: "SimWorks has drastically cut down my MATLAB coding time. The AI suggestions are incredibly accurate and insightful.",
+    quote: "HyperSym has drastically cut down my MATLAB coding time. The AI suggestions are incredibly accurate and insightful.",
     author: "Dr. Anya Sharma, Aerospace Engineer",
     avatar: "https://images.unsplash.com/photo-1590649880765-91b1956b8276?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     bgColor: "from-gray-800 to-gray-900",
@@ -26,7 +27,7 @@ const testimonials = [
     bgColor: "from-gray-800 to-gray-900",
   },
   {
-    quote: "I can now go from concept to a working simulation in hours, not weeks. SimWorks is a game-changer for Model-Based Design.",
+    quote: "I can now go from concept to a working simulation in hours, not weeks. HyperSym is a game-changer for Model-Based Design.",
     author: "Chloe Lee, Automotive Systems Engineer",
     avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?ixlib=rb-1.2.1&auto=format&fit=facearea&facepad=4&q=80&w=100&h=100",
     bgColor: "from-gray-800 to-gray-900",
@@ -86,7 +87,7 @@ const PlaygroundSidebarContent = ({ sidebarOpen, setSidebarOpen, recentChats, ha
       ))}
     </div>
     {/* Bottom: (optional) */}
-    <div className="p-4 border-t border-[#222] text-xs text-gray-500">SimWorks v1.0</div>
+    <div className="p-4 border-t border-[#222] text-xs text-gray-500">HyperSym v1.0</div>
   </div>
 );
 
@@ -191,7 +192,7 @@ const PlaygroundSection = () => {
               setInput('');
             }
           }}
-          placeholder="Ask SimWorks to create something..."
+          placeholder="Ask HyperSym to create something..."
           disabled={disabled}
         />
         <button
@@ -254,7 +255,7 @@ const PlaygroundSection = () => {
 
 const Index = () => {
   // Typewriter effect state
-  const phrases = ["Matlab Code", "Simulink MBD",];
+  const phrases = ["Matlab Code", "Simulink MBD"];
   const [displayedText, setDisplayedText] = useState("");
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
@@ -323,6 +324,41 @@ const Index = () => {
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
   const [researchDropdownOpen, setResearchDropdownOpen] = useState(false);
 
+  // Animation for Products section
+  const productsRef = useRef(null);
+  const [productsVisible, setProductsVisible] = useState(false);
+  const [leanForward, setLeanForward] = useState(true); // true = forward, false = back
+  const prevRatio = useRef(0);
+  const [intersectionRatio, setIntersectionRatio] = useState(0);
+
+  useEffect(() => {
+    const observer = new window.IntersectionObserver(
+      ([entry]) => {
+        setIntersectionRatio(entry.intersectionRatio);
+        if (entry.isIntersecting) {
+          setProductsVisible(true);
+        } else {
+          setProductsVisible(false);
+        }
+      },
+      { threshold: Array.from({length: 21}, (_, i) => i * 0.05) }
+    );
+    if (productsRef.current) {
+      observer.observe(productsRef.current);
+    }
+    return () => observer.disconnect();
+  }, []);
+
+  // Calculate 3D effect based on intersectionRatio
+  const rotateX = 35 - 35 * Math.min(intersectionRatio, 1);
+  const opacity = 0.5 + 0.5 * Math.min(intersectionRatio, 1);
+  const cardsStyle = {
+    transform: `rotateX(${rotateX}deg)` ,
+    opacity,
+    willChange: 'transform, opacity',
+    transition: 'transform 0.7s cubic-bezier(0.22,1,0.36,1), opacity 0.7s cubic-bezier(0.22,1,0.36,1)'
+  };
+
   return (
     <div className="min-h-screen bg-black text-white overflow-x-hidden relative">
       {/* Navigation */}
@@ -333,10 +369,10 @@ const Index = () => {
               {/* <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center mr-3">
                 <Code className="w-6 h-6 text-black" />
               </div> */}
-              <img src="/logo_solo.png" alt="SimWorks Logo" className="h-10 w-auto mr-3" />
+              <img src="/logo_n.png" alt="HyperSym Logo" className="h-10 w-auto mr-3" />
 
               <span className="text-2xl font-bold text-white">
-                SimWorks
+                HyperSym
               </span>
             </div>
             
@@ -379,7 +415,7 @@ const Index = () => {
               </div>
               <p className="text-xl text-gray-400 leading-relaxed">
               Experience the future of industry-grade simulations at scale.
-              SimWorks' AI agents turn natural language instructions into validated MATLAB & Simulink models, algorithms, and simulation results — cutting development time by up to 20×.
+              HyperSym's AI agents turn natural language instructions into validated MATLAB & Simulink models, algorithms, and simulation results — cutting development time by up to 20×.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Link to="https://github.com/simworks-ai/OctCoder">
@@ -430,10 +466,10 @@ const Index = () => {
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl sm:text-6xl font-bold mb-6 text-white">
-              MatCoder Agentic Playground
+              HyperSym Agentic Playground
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Watch MatCoder transform your ideas into simulations. Type anything and see magic happen.
+              Transform your ideas into simulations. Type anything and see magic happen.
             </p>
           </div>
           <div className="flex flex-1 w-full h-full justify-center items-center">
@@ -460,7 +496,7 @@ const Index = () => {
           <div className="flex justify-center mt-8">
             <Link to="/fullstack-playground">
               <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
-                Try MatCoder AI Agent -&gt;
+                Try HyperSym Agents -&gt;
               </Button>
             </Link>
           </div>
@@ -468,44 +504,46 @@ const Index = () => {
       </section>
 
       {/* Products Section */}
-      <section id="Products" className="py-12 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section id="Products" className="py-12 px-4 sm:px-6 lg:px-8 relative z-10" ref={productsRef}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-8">
             <h2 className="text-5xl sm:text-6xl font-bold mb-6 text-white">
-              Simulations Beyond Boundaries
+              Meet Simmy, Your AI‑Powered Simulation Co‑Pilot
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            SimWorks Agentic Suite that automate the entire design, simulation, and validation lifecycle for STEM Engineers.
+            HyperSym Agentic Suite that automate the entire design, simulation, and validation lifecycle for STEM Engineers.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* MatCoder Card */}
-              <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[260px] shadow-lg group overflow-hidden transition-colors duration-500">
-                {/* Gradient Overlay for Hover */}
-                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
-                <div className="text-gray-300 text-sm mb-8 z-10 relative">From natural language prompts to full Matlab processing pipelines, visualizations, and computations. What used to take weeks now happens in hours, sometimes minutes.</div>
-                <div className="mt-auto text-2xl font-bold text-white z-10 relative">MatCoder</div>
+          <div className={styles['perspective-1000']}>
+            <div style={cardsStyle} className="grid grid-cols-1 md:grid-cols-3 gap-8"> 
+              <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
+                {/* MatCoder Card */}
+                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[260px] shadow-lg group overflow-hidden transition-colors duration-500">
+                  {/* Gradient Overlay for Hover */}
+                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
+                  <div className="text-gray-300 text-sm mb-8 z-10 relative">From natural language prompts to full Matlab processing pipelines, visualizations, and computations. What used to take weeks now happens in hours, sometimes minutes.</div>
+                  <div className="mt-auto text-2xl font-bold text-white z-10 relative">MATcoder</div>
+                </div>
+                {/* Visualize the Impossible Card (SimCoder) */}
+                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[260px] shadow-lg group overflow-hidden transition-colors duration-500">
+                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
+                  <div className="text-gray-300 text-sm mb-8 z-10 relative">Instantly transform your requirements and metadata into fully functional Simulink models with AI-powered agents that accelerate control‑system design from concept to simulation.</div>
+                  <div className="mt-auto text-2xl font-bold text-white z-10 relative">SIMcoder</div>
+                </div>
               </div>
-              {/* Visualize the Impossible Card (SimCoder) */}
-              <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[260px] shadow-lg group overflow-hidden transition-colors duration-500">
-                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
-                <div className="text-gray-300 text-sm mb-8 z-10 relative">Step beyond the ordinary with designs that defy conventions. Our AI conjures up imaginative visuals that push the boundaries of creativity.</div>
-                <div className="mt-auto text-2xl font-bold text-white z-10 relative">SimCoder</div>
-              </div>
-            </div>
-            <div className="flex flex-col gap-8">
-              {/* Synergy and Style Card (CfdCoder) */}
-              <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[180px] shadow-lg group overflow-hidden transition-colors duration-500">
-                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
-                <div className="text-gray-300 text-sm mb-8 z-10 relative">Experience the perfect blend of form and function. Our AI ensures that every design not only looks stunning but also serves its purpose flawlessly.</div>
-                <div className="mt-auto text-2xl font-bold text-white z-10 relative">CfdCoder</div>
-              </div>
-              {/* Timeless Precision Card (CadCoder) */}
-              <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[180px] shadow-lg group overflow-hidden transition-colors duration-500">
-                <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
-                <div className="text-gray-300 text-sm mb-8 z-10 relative">Embrace the elegance of meticulously crafted designs. Our AI polishes every detail to bring a timeless quality to your creative projects.</div>
-                <div className="mt-auto text-2xl font-bold text-white z-10 relative">CadCoder</div>
+              <div className="flex flex-col gap-8">
+                {/* Synergy and Style Card (CfdCoder) */}
+                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[180px] shadow-lg group overflow-hidden transition-colors duration-500">
+                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
+                  <div className="text-gray-300 text-sm mb-8 z-10 relative">Leverage intelligent agents to convert your CFD queries and metadata into high‑fidelity fluid‑dynamics simulations with automated mesh setup and solver optimization.</div>
+                  <div className="mt-auto text-2xl font-bold text-white z-10 relative">CFDcoder</div>
+                </div>
+                {/* Timeless Precision Card (CadCoder) */}
+                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[180px] shadow-lg group overflow-hidden transition-colors duration-500">
+                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
+                  <div className="text-gray-300 text-sm mb-8 z-10 relative">Deploy AI agents to interpret your design inputs and metadata into precise CAD simulations, streamlining 3D modeling, assembly validation, and engineering analysis.</div>
+                  <div className="mt-auto text-2xl font-bold text-white z-10 relative">CADcoder</div>
+                </div>
               </div>
             </div>
           </div>
@@ -515,14 +553,14 @@ const Index = () => {
       {/* Research Section */}
       <section id="research" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl sm:text-6xl font-bold mb-12 text-center text-white">SimWorks Research</h2>
+          <h2 className="text-5xl sm:text-6xl font-bold mb-12 text-center text-white">HyperSym Research</h2>
           <div className="flex flex-col md:flex-row items-center md:items-stretch gap-4">
             {/* Left side: placeholder for future content */}
             <div className="flex-1 flex flex-col justify-center items-start mb-8 md:mb-0">
               <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-white">Advancing Agentic Systems for Simulations</h2>
               <p className="text-lg text-gray-300 mb-8 max-w-lg">We value continuous research and innovation in our agentic systems. Our research is focused on the development and evaluation of AI agents for industry-grade simulations. We support research labs in utilizing our state-of-the-art AI agents in their ecosystem to produce their own simulation-based research.</p>
               <Link to="/get-started">
-                <button className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-8 py-3 rounded-xl text-lg transition">Apply for SimWorks Research Program</button>
+                <button className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-8 py-3 rounded-xl text-lg transition">Apply for HyperSym Research Program</button>
               </Link>
             </div>
             {/* Right side: Research card styled like product cards, empty for user content */}
@@ -533,7 +571,7 @@ const Index = () => {
                   <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
                   {/* Card body left empty for user content */}
                   <div className="text-gray-300 text-sm mb-8 z-10 relative">OctCoder is an agentic framework that simplifies simulation creation and execution in GNU Octave. It uses natural language inputs to generate, run, and summarize simulations via interconnected AI agents. A user-friendly Gradio web interface enables seamless interaction.</div>
-                  <div className="mt-auto text-2xl font-bold text-white z-10 relative">OctCoder</div>
+                  <div className="mt-auto text-2xl font-bold text-white z-10 relative">OCTcoder</div>
                 </div>
               </a>
             </div>
@@ -589,7 +627,7 @@ const Index = () => {
                 <div className="mt-auto">
                   <div className="text-white/80 font-semibold mb-4">What's included</div>
                   <ul className="space-y-3 mb-8">
-                    <li className="flex items-center gap-3"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Complete access to SOTA SimWorks Agents, we support (macOS, Linux, Windows)</li>
+                    <li className="flex items-center gap-3"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Complete access to SOTA HyperSym Agents, we support (macOS, Linux, Windows)</li>
                     <li className="flex items-center gap-3"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Usage metered in universal credits</li>
                     <li className="flex items-center gap-3"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Email and Slack support</li>
                   </ul>

@@ -57,7 +57,7 @@ const Sidebar = ({ open, onClose, recentChats, onSelectChat }) => (
       ))}
     </div>
     {/* Bottom: (optional) */}
-    <div className="p-4 border-t border-[#222] text-xs text-gray-500">SimWorks v1.0</div>
+    <div className="p-4 border-t border-[#222] text-xs text-gray-500">HyperSym v1.0</div>
   </div>
 );
 
@@ -99,7 +99,7 @@ const UserInputArea = ({ onSendMessage, disabled }: { onSendMessage: (msg: strin
             setInput('');
           }
         }}
-        placeholder="Ask SimWorks to create something..."
+        placeholder="Ask HyperSym to create something..."
         disabled={disabled}
       />
       <button
@@ -196,19 +196,15 @@ const FullStackPlayground = () => {
     setSidebarOpen(false);
   };
 
-  // SimWorks Navigation Bar (copied from Index.tsx)
-  const SimWorksNav = () => (
+  // HyperSym Navigation Bar (copied from Index.tsx)
+  const HyperSymNav = () => (
     <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-black/90 border-b border-gray-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center group">
-            {/* <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center mr-3">
-              <Code className="w-6 h-6 text-black" />
-            </div> */}
-            <img src="/logo_solo.png" alt="SimWorks Logo" className="h-10 w-auto mr-3" />
-
+            <img src="/logo_n.png" alt="HyperSym Logo" className="h-10 w-auto mr-3" />
             <span className="text-2xl font-bold text-white">
-              SimWorks
+              HyperSym
             </span>
           </div>
           <div className="hidden md:flex items-center space-x-2">
@@ -229,7 +225,7 @@ const FullStackPlayground = () => {
   );
 
   // Sidebar as a flex child (not fixed) for desktop, drawer for mobile, integrated with playground
-  const SidebarContent = (
+  const PlaygroundSidebarContent = (
     <div className="flex flex-col h-full w-56 min-w-[200px] max-w-[90vw] bg-[#181818] border-r border-[#222] rounded-l-2xl lg:rounded-l-2xl md:rounded-l-2xl">
       {/* Plugins section at the top */}
       <div className="p-3 border-b border-[#222]">
@@ -264,7 +260,7 @@ const FullStackPlayground = () => {
         ))}
       </div>
       {/* Bottom: (optional) */}
-      <div className="p-4 border-t border-[#222] text-xs text-gray-500">SimWorks v1.0</div>
+      <div className="p-4 border-t border-[#222] text-xs text-gray-500">HyperSym v1.0</div>
     </div>
   );
 
@@ -289,11 +285,11 @@ const FullStackPlayground = () => {
 
   return (
     <div className="min-h-screen flex flex-col bg-black text-white">
-      <SimWorksNav />
+      <HyperSymNav />
       <div className="flex flex-1 w-full pt-20 pb-8 px-0 md:px-0">
         <div className="flex flex-1 w-full h-full">
           {/* Sidebar for desktop (flex child, not fixed) and drawer for mobile */}
-          <div className="hidden lg:flex h-[80vh] md:h-[calc(100vh-120px)]">{SidebarContent}</div>
+          <div className="hidden lg:flex h-[80vh] md:h-[calc(100vh-120px)]">{PlaygroundSidebarContent}</div>
           {/* Playground container */}
           <div className="flex-1 flex flex-col">
             <div className="flex h-[80vh] md:h-[calc(100vh-120px)] bg-[#0d0d0d] rounded-none md:rounded-r-2xl shadow-xl overflow-hidden border border-[#333]">
@@ -301,7 +297,7 @@ const FullStackPlayground = () => {
               {sidebarOpen && (
                 <div className="fixed inset-0 z-50 bg-black/60 flex lg:hidden" onClick={() => setSidebarOpen(false)}>
                   <div className="h-full" onClick={e => e.stopPropagation()}>
-                    {SidebarContent}
+                    {PlaygroundSidebarContent}
                   </div>
                 </div>
               )}

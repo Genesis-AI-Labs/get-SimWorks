@@ -1,4 +1,3 @@
-
 export interface Message {
   id: string;
   sender: 'user' | 'agent' | 'system';
@@ -20,7 +19,7 @@ export interface AgentUpdate {
 }
 
 export function getAgentResponse(prompt: string, onUpdate: (update: AgentUpdate) => void) {
-  onUpdate({ type: 'status', content: 'SimWorks Agent is thinking...' });
+  onUpdate({ type: 'status', content: 'HyperSym Agent is thinking...' });
   
   setTimeout(() => {
     let codeResponse = { 
@@ -49,13 +48,13 @@ document.body.appendChild(btn);`,
     } else if (lowerPrompt.includes("heading") || lowerPrompt.includes("title")) {
       codeResponse = {
         code: `const heading = document.createElement('h1');
-heading.textContent = 'Welcome to SimWorks!';
+heading.textContent = 'Welcome to HyperSym!';
 heading.style.color = '#3b82f6';
 heading.style.textAlign = 'center';
 heading.style.fontFamily = 'Arial, sans-serif';
 document.body.appendChild(heading);`,
         language: "javascript",
-        simHtml: `<h1 style="color:#3b82f6; text-align:center; font-family:Arial, sans-serif;">Welcome to SimWorks!</h1>`
+        simHtml: `<h1 style="color:#3b82f6; text-align:center; font-family:Arial, sans-serif;">Welcome to HyperSym!</h1>`
       };
     } else if (lowerPrompt.includes("card") || lowerPrompt.includes("component")) {
       codeResponse = {

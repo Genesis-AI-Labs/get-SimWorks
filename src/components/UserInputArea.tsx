@@ -33,7 +33,7 @@ const UserInputArea = ({ onSendMessage, disabled }: UserInputAreaProps) => {
           value={input}
           onChange={(e) => setInput(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Ask SimWorks to create something..."
+          placeholder="Ask HyperSym to create something..."
           className="flex-1 min-h-[60px] resize-none bg-[#1f1f1f] text-[#f0f0f0] border-[#333333] placeholder:text-[#9e9e9e] focus:border-[#2563eb] focus:ring-[#2563eb]"
           disabled={disabled}
         />

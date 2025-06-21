@@ -23,7 +23,7 @@ const SignIn = () => {
       {/* Left side: Black background, logo, art, quote */}
       <div className="md:w-1/2 w-full bg-black flex flex-col justify-between p-10 min-h-[400px]">
         <div>
-          <div className="text-white text-xl font-bold mb-8">SimWorks</div>
+          <div className="text-white text-xl font-bold mb-8">HyperSym</div>
           <div className="flex flex-1 items-center justify-center min-h-0">
             <img
               src="/sigin_in_page.gif"
@@ -33,7 +33,7 @@ const SignIn = () => {
           </div>
         </div>
         <div className="mt-12 text-gray-200 text-sm italic">
-        “SimWorks is revolutionizing model-based design by bridging natural language with powerful AI agents. Their system empowers engineers to effortlessly create and validate MATLAB & Simulink models, dramatically accelerating innovation cycles and reducing development time.”<br />
+        “HyperSym is revolutionizing model-based design by bridging natural language with powerful AI agents. Their system empowers engineers to effortlessly create and validate MATLAB & Simulink models, dramatically accelerating innovation cycles and reducing development time.”<br />
         {/* <span className="not-italic font-semibold">Prof. Michael Wheeler</span> (Harvard Business School) */}
         </div>
       </div>

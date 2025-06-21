@@ -1,10 +1,15 @@
-
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { Button } from "@/components/ui/button";
 import { Copy, Play, FileText, Folder, Settings, Search } from "lucide-react";
+import { Message } from '@/services/mockAgent';
 
 const CodeEditor = () => {
-  const [activeTab, setActiveTab] = useState('app.jsx');
+  const [copied, setCopied] = useState(false);
+  const [activeTab, setActiveTab] = useState('agent');
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [message, setMessage] = useState('Welcome to HyperSym!');
+  const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   const codeContent = `import React, { useState } from 'react';
 import { motion } from 'framer-motion';
@@ -12,7 +17,7 @@ import { Button } from '@/components/ui/button';
 
 function App() {
   const [count, setCount] = useState(0);
-  const [message, setMessage] = useState('Welcome to SimWorks!');
+  const [message, setMessage] = useState('Welcome to HyperSym!');
 
   const handleIncrement = () => {
     setCount(prev => prev + 1);
@@ -67,7 +72,7 @@ export default App;`;
                 <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
                 <div className="w-3 h-3 bg-green-500 rounded-full"></div>
               </div>
-              <span className="text-gray-300 text-sm ml-4">SimWorks Editor</span>
+              <span className="text-gray-300 text-sm ml-4">HyperSym Editor</span>
             </div>
             <div className="flex items-center space-x-2">
               <Button variant="ghost" size="sm" className="text-gray-400 hover:text-white p-1">
@@ -155,7 +160,7 @@ export default App;`;
                     
                     <span className="text-purple-400">function</span> <span className="text-yellow-300">App</span>() {`{`}{'\n'}
                     {'  '}<span className="text-purple-400">const</span> [<span className="text-blue-300">count</span>, <span className="text-blue-300">setCount</span>] = <span className="text-yellow-300">useState</span>(<span className="text-orange-300">0</span>);{'\n'}
-                    {'  '}<span className="text-purple-400">const</span> [<span className="text-blue-300">message</span>, <span className="text-blue-300">setMessage</span>] = <span className="text-yellow-300">useState</span>(<span className="text-green-300">'Welcome to SimWorks!'</span>);{'\n\n'}
+                    {'  '}<span className="text-purple-400">const</span> [<span className="text-blue-300">message</span>, <span className="text-blue-300">setMessage</span>] = <span className="text-yellow-300">useState</span>(<span className="text-green-300">'Welcome to HyperSym!'</span>);{'\n\n'}
                     
                     {'  '}<span className="text-purple-400">const</span> <span className="text-yellow-300">handleIncrement</span> = () =&gt; {`{`}{'\n'}
                     {'    '}<span className="text-yellow-300">setCount</span>(<span className="text-blue-300">prev</span> =&gt; <span className="text-blue-300">prev</span> + <span className="text-orange-300">1</span>);{'\n'}

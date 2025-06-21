@@ -1,0 +1,15 @@
+.perspective-1000 {
+  perspective: 1000px;
+}
+.lean-forward {
+  transform: rotateX(0deg);
+  opacity: 1;
+  will-change: transform, opacity;
+  transition: transform 0.7s cubic-bezier(0.22,1,0.36,1), opacity 0.7s cubic-bezier(0.22,1,0.36,1);
+}
+.lean-back {
+  transform: rotateX(35deg);
+  opacity: 0.5;
+  will-change: transform, opacity;
+  transition: transform 0.7s cubic-bezier(0.22,1,0.36,1), opacity 0.7s cubic-bezier(0.22,1,0.36,1);
+} 

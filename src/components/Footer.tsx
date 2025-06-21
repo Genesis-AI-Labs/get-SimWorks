@@ -9,7 +9,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row items-center justify-between bg-white text-black py-2 px-8 rounded-xl mb-12 max-w-5xl mx-auto">
           <div className="text-center md:text-left mb-6 md:mb-0">
             <h2 className="text-3xl font-bold mb-2 text-black">Ready to Automate Simulation Workflows That Scale?</h2>
-            {/* <p className="text-gray-600 text-base">Schedule a call with our team to learn how SimWorks can transform your Model-Based Design infrastructure.</p> */}
+            {/* <p className="text-gray-600 text-base">Schedule a call with our team to learn how Neumann AI can transform your Model-Based Design infrastructure.</p> */}
           </div>
           <a
             href="https://cal.com/get-simworks/30min"
@@ -24,9 +24,9 @@ const Footer = () => {
           {/* Company Info */}
           <div className="md:mb-0">
             <div className="flex items-center group mb-4">
-              <img src="/logo_solo.png" alt="SimWorks Logo" className="h-8 w-auto mr-2" />
+              <img src="/logo_n.png" alt="HyperSym Logo" className="h-8 w-auto mr-2" />
               <span className="text-3xl font-bold text-white">
-                SimWorks
+                HyperSym
               </span>
             </div>
             <p className="text-gray-400 text-base leading-relaxed mb-4 text-left">
@@ -77,7 +77,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="border-t border-gray-800 mt-8 pt-8 text-gray-500 text-sm text-left">
-          © {new Date().getFullYear()} SimWorks. All rights reserved.
+          © {new Date().getFullYear()} HyperSym. All rights reserved.
         </div>
       </div>
     </footer>

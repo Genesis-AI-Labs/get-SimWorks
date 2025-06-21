@@ -1,5 +1,6 @@
 import { Message } from '@/services/mockAgent';
 import CodeBlock from './CodeBlock';
+import { Zap } from 'lucide-react';
 
 interface ChatMessageProps {
   message: Message;
@@ -19,7 +20,7 @@ const ChatMessage = ({ message, streamingCode, isStreaming = false }: ChatMessag
             <div className="w-8 h-8 bg-[#2563eb] rounded-full flex items-center justify-center text-white text-sm font-bold">
               SW
             </div>
-            <span className="ml-2 text-sm text-[#9e9e9e]">SimWorks Agent</span>
+            <span className="ml-2 text-sm text-[#9e9e9e]">HyperSym Agent</span>
           </div>
         )}
         
