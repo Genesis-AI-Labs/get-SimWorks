@@ -12,7 +12,7 @@ const Footer = () => {
             {/* <p className="text-gray-600 text-base">Schedule a call with our team to learn how Neumann AI can transform your Model-Based Design infrastructure.</p> */}
           </div>
           <a
-            href="https://cal.com/get-simworks/30min"
+            href="https://cal.com/get-simmy/30min"
             className="inline-flex items-center justify-center rounded-xl text-xl font-bold px-12 py-5 bg-[#8B5CF6] text-white shadow-md hover:bg-[#7C3AED] transition-all duration-300 mx-auto w-full max-w-xs"
             style={{ boxShadow: '0 2px 16px 0 rgba(80, 80, 120, 0.10)' }}
           >

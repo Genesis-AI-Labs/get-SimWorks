@@ -9,7 +9,7 @@ const SignIn = () => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
       if (session) {
         // navigate('/fullstack-playground');
-        window.location.href = 'https://cal.com/get-simworks/30min';
+        window.location.href = 'https://cal.com/get-simmy/30min';
       }
     });
     return () => subscription.unsubscribe();
