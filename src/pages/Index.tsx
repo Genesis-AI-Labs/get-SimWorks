@@ -424,16 +424,16 @@ const Index = () => {
                     Try OctCoder
                   </Button>
                 </Link>
-                <Link to="/get-started">
+                <Link to="/signin">
                   <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
-                    MatCoder AI
+                    Get Simmy 
                   </Button>
                 </Link>
-                <Link to="/get-started">
+                {/* <Link to="/get-started">
                 <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
                   SimCoder AI
                 </Button>
-                </Link>
+                </Link> */}
               </div>
             </div>
             <div className="md:w-1/2 w-full flex justify-center md:justify-end mt-10 md:mt-0 md:mr-12 mr-0 md:pl-2">
@@ -662,10 +662,12 @@ const Index = () => {
             </div>
             {/* Centered button on top of blur */}
             <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 flex flex-col items-center justify-center w-full">
-              <button className="bg-white text-black font-semibold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-gray-100 transition-all duration-200 flex items-center gap-2 pointer-events-auto">
-                Get Simmy, Its Free :)
-                <span className="ml-1">→</span>
-              </button>
+              <Link to="/signin">
+                <button className="bg-white text-black font-semibold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-gray-100 transition-all duration-200 flex items-center gap-2 pointer-events-auto">
+                  Get Simmy, It is Free :)
+                  <span className="ml-1">→</span>
+                </button>
+              </Link>
             </div>
           </div>
         </div>
