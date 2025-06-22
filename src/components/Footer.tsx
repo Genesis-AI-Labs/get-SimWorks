@@ -24,7 +24,7 @@ const Footer = () => {
           {/* Company Info */}
           <div className="md:mb-0">
             <div className="flex items-center group mb-4">
-              <img src="/logo_n.png" alt="HyperSym Logo" className="h-8 w-auto mr-2" />
+              <img src="/hypersym_logo_small.png" alt="HyperSym Logo" className="h-8 w-auto mr-2 align-middle" />
               <span className="text-3xl font-bold text-white">
                 HyperSym
               </span>

@@ -11,6 +11,7 @@ import FullStackPlayground from "./pages/FullStackPlayground";
 import { supabase } from './lib/supabaseClient';
 import SignIn from './pages/SignIn';
 import { useEffect, useState } from 'react';
+import Services from "./pages/Services";
 
 const queryClient = new QueryClient();
 
@@ -42,6 +43,7 @@ const App = () => (
               <FullStackPlayground />
             </RequireAuth>
           } />
+          <Route path="/services" element={<Services />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

@@ -369,7 +369,7 @@ const Index = () => {
               {/* <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center mr-3">
                 <Code className="w-6 h-6 text-black" />
               </div> */}
-              <img src="/logo_n.png" alt="HyperSym Logo" className="h-10 w-auto mr-3" />
+              <img src="/hypersym_logo_small.png" alt="HyperSym Logo" className="h-10 w-auto mr-3 align-middle" />
 
               <span className="text-2xl font-bold text-white">
                 HyperSym
@@ -381,7 +381,8 @@ const Index = () => {
                 {/* Products Link */}
                 <a href="#Products" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Products</a>
                 {/* Playground Link */}
-                <a href="#playground" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Playground</a>
+                <a href="#platform" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Platform</a>
+                <Link to="/services" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Services</Link>
                 {/* Research Link */}
                 <a href="#research" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Research</a>
                 {/* Pricing Link */}
@@ -423,14 +424,16 @@ const Index = () => {
                     Try OctCoder
                   </Button>
                 </Link>
-                <Link to="/fullstack-playground">
+                <Link to="/get-started">
                   <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
                     MatCoder AI
                   </Button>
                 </Link>
+                <Link to="/get-started">
                 <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
-                  SimCoder AI (Coming Soon)
+                  SimCoder AI
                 </Button>
+                </Link>
               </div>
             </div>
             <div className="md:w-1/2 w-full flex justify-center md:justify-end mt-10 md:mt-0 md:mr-12 mr-0 md:pl-2">
@@ -461,12 +464,12 @@ const Index = () => {
         </div>
       </section> */}
 
-      {/* Interactive Playground */}
-      <section id="playground" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+      {/* Interactive Platform */}
+      <section id="platform" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl sm:text-6xl font-bold mb-6 text-white">
-              HyperSym Agentic Playground
+              HyperSym Agentic Platform
             </h2>
             <p className="text-xl text-gray-400 max-w-3xl mx-auto">
               Transform your ideas into simulations. Type anything and see magic happen.
@@ -531,18 +534,22 @@ const Index = () => {
                   <div className="mt-auto text-2xl font-bold text-white z-10 relative">SIMcoder</div>
                 </div>
               </div>
-              <div className="flex flex-col gap-8">
+              <div className="flex flex-col gap-8 relative">
+                {/* Overlay for both cards */}
+                <div className="absolute inset-0 w-full h-full bg-black/80 z-20 flex items-center justify-center rounded-2xl">
+                  <span className="text-4xl md:text-5xl font-bold text-amber-400 drop-shadow-lg select-none">Coming Soon</span>
+                </div>
                 {/* Synergy and Style Card (CfdCoder) */}
-                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[180px] shadow-lg group overflow-hidden transition-colors duration-500">
+                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[180px] shadow-lg group overflow-hidden transition-colors duration-500 z-10">
                   <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
-                  <div className="text-gray-300 text-sm mb-8 z-10 relative">Leverage intelligent agents to convert your CFD queries and metadata into high‑fidelity fluid‑dynamics simulations with automated mesh setup and solver optimization.</div>
-                  <div className="mt-auto text-2xl font-bold text-white z-10 relative">CFDcoder</div>
+                  <div className="text-gray-300 text-sm mb-8 z-30 relative">Leverage intelligent agents to convert your CFD queries and metadata into high‑fidelity fluid‑dynamics simulations with automated mesh setup and solver optimization.</div>
+                  <div className="mt-auto text-2xl font-bold text-white z-30 relative">CFDcoder</div>
                 </div>
                 {/* Timeless Precision Card (CadCoder) */}
-                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[180px] shadow-lg group overflow-hidden transition-colors duration-500">
+                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[180px] shadow-lg group overflow-hidden transition-colors duration-500 z-10">
                   <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
-                  <div className="text-gray-300 text-sm mb-8 z-10 relative">Deploy AI agents to interpret your design inputs and metadata into precise CAD simulations, streamlining 3D modeling, assembly validation, and engineering analysis.</div>
-                  <div className="mt-auto text-2xl font-bold text-white z-10 relative">CADcoder</div>
+                  <div className="text-gray-300 text-sm mb-8 z-30 relative">Deploy AI agents to interpret your design inputs and metadata into precise CAD simulations, streamlining 3D modeling, assembly validation, and engineering analysis.</div>
+                  <div className="mt-auto text-2xl font-bold text-white z-30 relative">CADcoder</div>
                 </div>
               </div>
             </div>
