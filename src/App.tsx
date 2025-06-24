@@ -38,11 +38,6 @@ const App = () => (
           <Route path="/pricing" element={<Pricing />} />
           <Route path="/get-started" element={<FormPage />} />
           <Route path="/signin" element={<SignIn />} />
-          <Route path="/fullstack-playground" element={
-            <RequireAuth>
-              <FullStackPlayground />
-            </RequireAuth>
-          } />
           <Route path="/services" element={<Services />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
