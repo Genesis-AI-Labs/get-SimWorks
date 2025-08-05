@@ -3,23 +3,67 @@ import { ExternalLink, ArrowRight } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-black py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-800 relative z-10">
-      <div className="max-w-7xl mx-auto">
-        {/* Schedule a Call Block */}
-        <div className="flex flex-col md:flex-row items-center justify-between bg-black text-white py-2 px-8 rounded-xl mb-12 max-w-5xl mx-auto">
-          <div className="text-center md:text-left mb-6 md:mb-0">
-            <h2 className="text-3xl font-bold mb-2 text-white">Ready to Automate Simulation Workflows That Scale?</h2>
-            {/* <p className="text-gray-600 text-base">Schedule a call with our team to learn how Neumann AI can transform your Model-Based Design infrastructure.</p> */}
-          </div>
-          <a
-            href="https://cal.com/get-simmy/30min"
-            className="inline-flex items-center justify-center rounded-xl text-xl font-bold px-12 py-5 bg-[#8B5CF6] text-white shadow-md hover:bg-[#7C3AED] transition-all duration-300 mx-auto w-full max-w-xs"
-            style={{ boxShadow: '0 2px 16px 0 rgba(80, 80, 120, 0.10)' }}
-          >
-            Schedule a Call <ArrowRight className="ml-2 h-5 w-5" />
-          </a>
-        </div>
-
+    <footer 
+      className="py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-800 relative z-10 overflow-hidden"
+      style={{
+        background: `radial-gradient(circle at 100% 0%, #eaf6ff 0%, #3e7cb1 18%, transparent 32%), linear-gradient(225deg, transparent 0%, #101624 40%, #000 80%, #000 100%)`
+      }}
+    >
+      {/* Enhanced Line Pattern Overlay */}
+      <div
+        className="absolute inset-0 z-10 pointer-events-none"
+        style={{
+          background:
+            `repeating-linear-gradient(
+              to bottom,
+              rgba(255,255,255,0.15) 0px,
+              rgba(255,255,255,0.15) 1px,
+              transparent 1px,
+              transparent 25px
+            ),
+            repeating-linear-gradient(
+              to right,
+              rgba(255,255,255,0.12) 0px,
+              rgba(255,255,255,0.12) 1px,
+              transparent 1px,
+              transparent 40px
+            ),
+            repeating-linear-gradient(
+              45deg,
+              rgba(255,255,255,0.06) 0px,
+              rgba(255,255,255,0.06) 1px,
+              transparent 1px,
+              transparent 50px
+            ),
+            repeating-linear-gradient(
+              -45deg,
+              rgba(255,255,255,0.04) 0px,
+              rgba(255,255,255,0.04) 1px,
+              transparent 1px,
+              transparent 70px
+            )`,
+          maskImage: 'linear-gradient(to top, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.05) 80%, rgba(0,0,0,0) 100%)',
+        }}
+      />
+      {/* Subtle corner lines (top-right and bottom-left) */}
+      <div className="pointer-events-none absolute inset-0 z-10">
+        {/* Top-right corner */}
+        <svg width="80" height="80" className="absolute right-0 top-0" style={{opacity:0.18}}>
+          <polyline points="40,0 80,0 80,40" fill="none" stroke="#fff" strokeWidth="1.5" />
+        </svg>
+        {/* Bottom-left corner */}
+        <svg width="80" height="80" className="absolute left-0 bottom-0" style={{opacity:0.18}}>
+          <polyline points="0,40 0,80 40,80" fill="none" stroke="#fff" strokeWidth="1.5" />
+        </svg>
+      </div>
+      {/* Gradient overlays for extra depth */}
+      <div className="absolute inset-0 z-10 pointer-events-none">
+        {/* Top gradient glow */}
+        <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-[#1a2747]/30 to-transparent" />
+        {/* Blue accent light from top right */}
+        <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-blue-600/15 blur-[200px]" />
+      </div>
+      <div className="relative z-20 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[320px_1fr_1fr_1fr] gap-y-8 gap-x-12 items-start">
           {/* Company Info */}
           <div className="md:mb-0">

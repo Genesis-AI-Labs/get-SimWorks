@@ -10,7 +10,6 @@ import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
 import { createClient } from '@supabase/supabase-js';
 import HoverDropdown from "@/components/HoverDropdown";
-import styles from './Index.module.css';
 
 const testimonials = [
   {
@@ -42,17 +41,30 @@ const testimonials = [
 
 // Sidebar content for the playground section
 const useRecentChats = () => {
-  const [recentChats, setRecentChats] = useState(() => {
-    const stored = localStorage.getItem('simworks_recent_chats');
-    return stored ? JSON.parse(stored) : [];
-  });
+  const [recentChats, setRecentChats] = useState<any[]>([]);
+  
   useEffect(() => {
+    // Initialize from localStorage on mount
+    const stored = localStorage.getItem('simworks_recent_chats');
+    if (stored) {
+      try {
+        setRecentChats(JSON.parse(stored));
+      } catch (error) {
+        console.error('Error parsing stored chats:', error);
+        setRecentChats([]);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    // Save to localStorage whenever recentChats changes
     localStorage.setItem('simworks_recent_chats', JSON.stringify(recentChats));
   }, [recentChats]);
-  return [recentChats, setRecentChats];
+  
+  return [recentChats, setRecentChats] as const;
 };
 
-const PlaygroundSidebarContent = ({ sidebarOpen, setSidebarOpen, recentChats, handleSelectChat }) => (
+const PlaygroundSidebarContent = ({ sidebarOpen, setSidebarOpen, recentChats, handleSelectChat }: any) => (
   <div className="flex flex-col h-full w-56 min-w-[200px] max-w-[90vw] bg-[#181818] border-r border-[#222] rounded-l-2xl">
     {/* Plugins section at the top */}
     <div className="p-3 border-b border-[#222]">
@@ -76,7 +88,7 @@ const PlaygroundSidebarContent = ({ sidebarOpen, setSidebarOpen, recentChats, ha
       {recentChats.length === 0 && (
         <div className="text-gray-500 text-sm px-2 py-4">No recent chats</div>
       )}
-      {recentChats.map(chat => (
+      {recentChats.map((chat: any) => (
         <div
           key={chat.id}
           className="truncate px-3 py-2 rounded hover:bg-[#232323] cursor-pointer text-sm text-gray-200 mb-1"
@@ -91,7 +103,7 @@ const PlaygroundSidebarContent = ({ sidebarOpen, setSidebarOpen, recentChats, ha
   </div>
 );
 
-const PlaygroundTopBar = ({ tab, setTab, setSidebarOpen }) => (
+const PlaygroundTopBar = ({ tab, setTab, setSidebarOpen }: any) => (
   <div className="flex items-center bg-[#1a1a1a] border-b border-[#333] px-6 h-14">
     <button className="lg:hidden mr-4 p-2" onClick={() => setSidebarOpen(true)}><Menu size={22} /></button>
     <button
@@ -113,17 +125,17 @@ const PlaygroundSection = () => {
   const [tab, setTab] = useState('Agent');
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [recentChats, setRecentChats] = useRecentChats();
-  const [messages, setMessages] = useState([]);
+  const [messages, setMessages] = useState<any[]>([]);
   const [code, setCode] = useState('');
   const [simulationHtml, setSimulationHtml] = useState('');
   const [loading, setLoading] = useState(false);
-  const messagesEndRef = useRef(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
-  const handleSendMessage = async (content) => {
+  const handleSendMessage = async (content: string) => {
     setMessages(prev => [...prev, { sender: 'user', content }]);
     setLoading(true);
     if (!recentChats.some(c => c.title === content)) {
@@ -138,7 +150,7 @@ const PlaygroundSection = () => {
     }, 800);
   };
 
-  const handleSelectChat = (chat) => {
+  const handleSelectChat = (chat: any) => {
     setMessages([{ sender: 'user', content: chat.title }]);
     setCode('');
     setSimulationHtml('');
@@ -146,12 +158,13 @@ const PlaygroundSection = () => {
   };
 
   // UI for code and agent panes
-  const CodeViewer = ({ code }) => (
+  const CodeViewer = ({ code }: { code: string }) => (
     <div className="flex-1 bg-[#181818] rounded-lg m-4 border border-[#222] flex flex-col justify-center items-center overflow-auto">
       <pre className="text-[#9e9e9e] text-left w-full whitespace-pre-wrap p-4">{code || 'Code will appear here'}</pre>
     </div>
   );
-  const AgentTimeline = ({ messages }) => (
+  
+  const AgentTimeline = ({ messages }: { messages: any[] }) => (
     <div className="flex-1 bg-[#121212] overflow-y-auto p-6 space-y-4">
       {messages.length === 0 ? (
         <div className="text-center text-[#a8a8a8] mt-20">
@@ -172,12 +185,14 @@ const PlaygroundSection = () => {
       )}
     </div>
   );
-  const SimulationPreview = ({ simulationHtml }) => (
+  
+  const SimulationPreview = ({ simulationHtml }: { simulationHtml: string }) => (
     <div className="flex-1 bg-[#181818] rounded-lg m-4 border border-[#222] flex flex-col justify-center items-center overflow-auto">
       <span className="text-[#9e9e9e] text-lg" dangerouslySetInnerHTML={{ __html: simulationHtml || 'Simulation/preview will appear here' }} />
     </div>
   );
-  const UserInputArea = ({ onSendMessage, disabled }) => {
+  
+  const UserInputArea = ({ onSendMessage, disabled }: { onSendMessage: (message: string) => void; disabled: boolean }) => {
     const [input, setInput] = useState('');
     return (
       <div className="flex items-center p-4 bg-[#1a1a1a] border-t border-[#333]">
@@ -223,7 +238,9 @@ const PlaygroundSection = () => {
       )}
       <div className="flex w-full max-w-6xl h-[80vh] bg-[#0d0d0d] rounded-2xl shadow-xl overflow-hidden border border-[#333]">
         {/* Sidebar for desktop (flex child, not fixed) */}
-        <div className="hidden lg:flex h-full"> <PlaygroundSidebarContent sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} recentChats={recentChats} handleSelectChat={handleSelectChat} /> </div>
+        <div className="hidden lg:flex h-full"> 
+          <PlaygroundSidebarContent sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} recentChats={recentChats} handleSelectChat={handleSelectChat} /> 
+        </div>
         {/* Playground content */}
         <div className="flex-1 flex flex-col">
           <PlaygroundTopBar tab={tab} setTab={setTab} setSidebarOpen={setSidebarOpen} />
@@ -255,7 +272,7 @@ const PlaygroundSection = () => {
 
 const Index = () => {
   // Typewriter effect state
-  const phrases = ["Matlab Code", "Simulink MBD"];
+  const phrases = ["Matlab Code", "Simulink Models", "CFD Simulation"];
   const [displayedText, setDisplayedText] = useState("");
   const [phraseIdx, setPhraseIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
@@ -269,7 +286,7 @@ const Index = () => {
   }, []);
 
   useEffect(() => {
-    let timeout: NodeJS.Timeout;
+    let timeout: ReturnType<typeof setTimeout>;
 
     const currentPhrase = phrases[phraseIdx];
 
@@ -323,233 +340,404 @@ const Index = () => {
 
   const [productsDropdownOpen, setProductsDropdownOpen] = useState(false);
   const [researchDropdownOpen, setResearchDropdownOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Animation for Products section
-  const productsRef = useRef(null);
-  const [productsVisible, setProductsVisible] = useState(false);
-  const [leanForward, setLeanForward] = useState(true); // true = forward, false = back
-  const prevRatio = useRef(0);
-  const [intersectionRatio, setIntersectionRatio] = useState(0);
-
-  useEffect(() => {
-    const observer = new window.IntersectionObserver(
-      ([entry]) => {
-        setIntersectionRatio(entry.intersectionRatio);
-        if (entry.isIntersecting) {
-          setProductsVisible(true);
-        } else {
-          setProductsVisible(false);
-        }
-      },
-      { threshold: Array.from({length: 21}, (_, i) => i * 0.05) }
-    );
-    if (productsRef.current) {
-      observer.observe(productsRef.current);
+  const handleProductClick = (index: number) => {
+    if (index !== selectedProduct) {
+      setIsTransitioning(true);
+      setTimeout(() => {
+        setSelectedProduct(index);
+        setIsTransitioning(false);
+      }, 300);
     }
-    return () => observer.disconnect();
-  }, []);
-
-  // Calculate 3D effect based on intersectionRatio
-  const rotateX = 35 - 35 * Math.min(intersectionRatio, 1);
-  const opacity = 0.5 + 0.5 * Math.min(intersectionRatio, 1);
-  const cardsStyle = {
-    transform: `rotateX(${rotateX}deg)` ,
-    opacity,
-    willChange: 'transform, opacity',
-    transition: 'transform 0.7s cubic-bezier(0.22,1,0.36,1), opacity 0.7s cubic-bezier(0.22,1,0.36,1)'
   };
 
-  return (
-    <div className="min-h-screen bg-black text-white overflow-x-hidden relative">
-      {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 backdrop-blur-xl bg-black/90 border-b border-gray-800">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center group">
-              {/* <div className="w-10 h-10 bg-white rounded-2xl flex items-center justify-center mr-3">
-                <Code className="w-6 h-6 text-black" />
-              </div> */}
-              <img src="/hypersym_logo_small.png" alt="HyperSym Logo" className="h-10 w-auto mr-3 align-middle" />
+  const products = [
+    {
+      id: 0,
+      title: "Transparent Data Delivery with Benchmark Insights",
+      description: "Access your data through our visual dataset viewer, complete with benchmark scores and quality metrics. You'll see exactly what was built, how it performs, and where it fits in your development pipeline. We offer unlimited revisions until you're confident in every datapoint—so you can move forward with certainty, not assumptions.",
+      badge: "DELIVERY",
+      color: "blue"
+    },
+    {
+      id: 1,
+      title: "Kick Off Data Creation with Top Talent on Our Gamified Platform", 
+      description: "Once your needs are defined, our curated pool of world-class engineers and annotators gets to work. Using our proprietary gamified platform, we drive high engagement, precision, and speed—ensuring your data is generated and labeled by top performers incentivized to solve real AI problems, not just complete tasks. Our users include top software & research engineers at leading companies & startups.",
+      badge: "DATA CREATION",
+      color: "green"
+    },
+    {
+      id: 2,
+      title: "Quality Check with Advanced Validation Systems",
+      description: "Every piece of data goes through our multi-layered quality assurance process. Our advanced validation systems ensure accuracy, consistency, and reliability before delivery. Real-time monitoring and automated checks catch issues early, maintaining the highest standards throughout the entire pipeline.",
+      badge: "QUALITY CHECK", 
+      color: "purple"
+    },
+    {
+      id: 3,
+      title: "Evaluation and Performance Optimization",
+      description: "Comprehensive evaluation metrics and performance analysis help you understand exactly how your data performs. Our evaluation framework provides detailed insights into model performance, data quality scores, and optimization recommendations to ensure your AI systems achieve peak performance.",
+      badge: "EVALUATION",
+      color: "orange"
+    }
+  ];
 
-              <span className="text-2xl font-bold text-white">
-                HyperSym
-              </span>
+  return (
+    <div className="min-h-screen bg-[#0B0E17] text-white overflow-x-hidden relative">
+      {/* Navigation */}
+      <nav className="fixed top-0 w-full z-50" style={{background:'transparent',border:'none',boxShadow:'none'}}>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex justify-center items-center h-16">
+            <div className="hidden md:flex items-center space-x-8">
+              <Link to="/" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Home</Link>
+              <a href="#Products" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Products</a>
+              <a href="#platform" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Platform</a>
+              <Link to="/services" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Services</Link>
+              <a href="#research" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Research</a>
+              <Link to="/careers" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Careers</Link>
             </div>
-            
-            <div className="hidden md:flex items-center space-x-2">
-              <div className="flex items-center space-x-1 bg-gray-800/50 backdrop-blur-lg rounded-full p-1 border border-gray-700">
-                {/* Products Link */}
-                <a href="#Products" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Products</a>
-                {/* Playground Link */}
-                <a href="#platform" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Platform</a>
-                <Link to="/services" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Services</Link>
-                {/* Research Link */}
-                <a href="#research" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Research</a>
-                {/* Pricing Link */}
-                <a href="#pricing" className="px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 hover:bg-gray-700 hover:scale-105">Pricing</a>
-              </div>
-            </div>
-            
-            <Link to="/get-started">
-              <Button className="bg-white text-black hover:bg-gray-200 font-semibold px-6 py-2 rounded-full transform hover:scale-105 transition-all duration-300">
-                Get Started
-              </Button>
-            </Link>
           </div>
+        </div>
+        
+        {/* Detached Logo - Top Left */}
+        <div className="absolute top-4 left-4 sm:left-8">
+          <div className="flex items-center gap-2">
+            <img src="/hypersym_logo_small.png" alt="HyperSym Logo" className="h-8 w-auto" />
+            <span className="text-xl font-semibold text-white">
+              HyperSym
+            </span>
+          </div>
+        </div>
+        
+        {/* Detached Button - Top Right */}
+        <div className="absolute top-4 right-4 sm:right-8">
+          <Link to="/get-started">
+            <Button className="bg-gray-800 text-white hover:bg-gray-700 text-sm px-6 py-2.5 rounded-lg font-medium transition-all duration-200 border border-gray-600">
+              SCHEDULE A CALL <ArrowRight className="inline-block ml-1" size={14} />
+            </Button>
+          </Link>
         </div>
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col md:flex-row items-center gap-16">
-            <div className="md:w-1/2 w-full space-y-8 pr-4 md:pr-12">
-              <div className="space-y-4">
-                <h1 className="text-6xl sm:text-7xl lg:text-8xl font-bold leading-[1.2]">
-                  <span className="block mb-4">Supercharge</span>
-                  <span className="block mb-4 text-gray-400">Your</span>
-                  <span className="block h-[1.0em] flex items-center" style={{ minWidth: '22ch', fontFamily: 'monospace' }}>
-                    <span className="inline-block min-w-[1ch]">{displayedText}</span>
-                    <span className="inline-block w-2 h-8 bg-white animate-pulse ml-1"></span>
+      <section
+        className="relative min-h-screen flex items-center overflow-hidden"
+        style={{
+          background:
+            `radial-gradient(circle at 0% 100%, #eaf6ff 0%, #3e7cb1 22%, transparent 45%), 
+             radial-gradient(ellipse 120% 80% at 75% 50%, transparent 0%, transparent 35%, rgba(16, 22, 36, 0.6) 50%, #000000 65%, #000000 100%),
+             linear-gradient(90deg, transparent 0%, rgb(14, 22, 42) 25%, #101624 45%, rgba(0, 0, 0, 0.8) 58%, #000000 62%, #000000 100%)`,
+        }}
+      >
+        {/* Enhanced Line Pattern Overlay */}
+        <div
+          className="absolute inset-0 z-10 pointer-events-none"
+          style={{
+            background:
+              `repeating-linear-gradient(
+                to bottom,
+                rgba(255,255,255,0.15) 0px,
+                rgba(255,255,255,0.15) 1px,
+                transparent 1px,
+                transparent 25px
+              ),
+              repeating-linear-gradient(
+                to right,
+                rgba(255,255,255,0.12) 0px,
+                rgba(255,255,255,0.12) 1px,
+                transparent 1px,
+                transparent 40px
+              ),
+              repeating-linear-gradient(
+                45deg,
+                rgba(255,255,255,0.06) 0px,
+                rgba(255,255,255,0.06) 1px,
+                transparent 1px,
+                transparent 50px
+              ),
+              repeating-linear-gradient(
+                -45deg,
+                rgba(255,255,255,0.04) 0px,
+                rgba(255,255,255,0.04) 1px,
+                transparent 1px,
+                transparent 70px
+              )`,
+            maskImage: 'linear-gradient(to right, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.05) 80%, rgba(0,0,0,0) 100%)',
+          }}
+        />
+        {/* Subtle corner lines (top-left and bottom-right) */}
+        <div className="pointer-events-none absolute inset-0 z-10">
+          {/* Top-left corner */}
+          <svg width="80" height="80" className="absolute left-0 top-0" style={{opacity:0.18}}>
+            <polyline points="0,40 0,0 40,0" fill="none" stroke="#fff" strokeWidth="1.5" />
+          </svg>
+          {/* Bottom-right corner */}
+          <svg width="80" height="80" className="absolute right-0 bottom-0" style={{opacity:0.18}}>
+            <polyline points="40,80 80,80 80,40" fill="none" stroke="#fff" strokeWidth="1.5" />
+          </svg>
+        </div>
+        {/* Gradient overlays for extra depth */}
+        <div className="absolute inset-0 z-10 pointer-events-none">
+          {/* Bottom gradient glow */}
+          <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-[#1a2747]/30 to-transparent" />
+          {/* Blue accent light from bottom left */}
+          <div className="absolute bottom-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-blue-600/15 blur-[200px]" />
+        </div>
+        <div className="relative z-20 max-w-8xl mx-auto w-full px-8 sm:px-12 lg:px-16">
+          <div className="flex flex-col lg:flex-row items-center gap-8 min-h-screen">
+            <div className="lg:w-3/5 w-full space-y-10">
+              <div className="space-y-8">
+                <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight text-white drop-shadow-lg">
+                  <span className="block mb-2">Supercharge</span>
+                  <span className="block mb-4 text-gray-500">Your</span>
+                  <span className="block text-white">
+                    <span className="inline-block">{displayedText}</span>
+                    <span className="inline-block w-1 h-8 bg-white animate-pulse ml-2"></span>
                   </span>
                 </h1>
               </div>
-              <p className="text-xl text-gray-400 leading-relaxed">
-              Re-imagine industrial simulations at scale. <br></br>
+              <p className="text-xl text-gray-300 leading-relaxed max-w-2xl mt-6">
+              Re-imagine industrial simulations at scale.
               HyperSym Agents turn natural language instructions into validated simulation models — cutting development time by up to 20×.
               </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Link to="https://github.com/simworks-ai/OctCoder">
-                  <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
-                    Try OctCoder
+              
+              <div className="flex flex-col sm:flex-row gap-6 mt-8">
+                <Link to="/get-started">
+                  <Button size="lg" className="bg-black text-white hover:bg-gray-900 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden" 
+                    style={{
+                      clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                    }}>
+                    SCHEDULE A CALL <ArrowRight className="inline-block ml-2" size={20} />
                   </Button>
                 </Link>
-                <Link to="/signin">
-                  <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
-                    Get Simmy 
+                <Link to="/careers">
+                  <Button size="lg" className="bg-white text-black hover:bg-gray-100 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden" 
+                    style={{
+                      clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+                    }}>
+                    CAREERS <ArrowRight className="inline-block ml-2" size={20} />
                   </Button>
                 </Link>
-                {/* <Link to="/get-started">
-                <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
-                  SimCoder AI
-                </Button>
-                </Link> */}
               </div>
             </div>
-            <div className="md:w-1/2 w-full flex justify-center md:justify-end mt-10 md:mt-0 md:mr-12 mr-0 md:pl-2">
-              <img 
-                src="/animation_mesh_240_c24.gif" 
-                alt="Animated Mesh" 
-                style={{ aspectRatio: '4/3', maxWidth: '500px', width: '100%', height: 'auto', borderRadius: '1rem', boxShadow: '0 4px 32px rgba(0,0,0,0.15)' }}
-                className="object-contain"
-              />
+            
+            <div className="lg:w-2/5 w-full flex justify-center lg:justify-end items-center mt-10 lg:mt-0 pr-8 lg:pr-16">
+              <div className="relative w-full max-w-2xl">
+                <img 
+                  src="/animation_mesh_240_c24.gif" 
+                  alt="Animated Mesh" 
+                  className="w-full h-auto object-contain"
+                  style={{ 
+                    minWidth: '400px',
+                    maxWidth: '800px',
+                    width: '100%'
+                  }}
+                  onError={(e) => {
+                    console.log('GIF failed to load:', e);
+                    (e.target as HTMLImageElement).style.border = '2px solid red';
+                  }}
+                  onLoad={() => console.log('GIF loaded successfully')}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        {/* Backed By section - positioned at bottom */}
+        <div className="absolute bottom-8 left-0 right-0">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="flex items-center gap-8 text-sm">
+              <span className="text-gray-500">Backed By</span>
+              <div className="flex items-center gap-2 px-4 py-2 bg-[#1a1f2a] rounded border border-gray-800/50">
+                <div className="w-6 h-6 bg-orange-500 rounded flex items-center justify-center text-white font-bold text-xs">Y</div>
+                <span className="text-gray-400">Combinator</span>
+              </div>
+              <div className="px-4 py-2 bg-[#1a1f2a] rounded border border-gray-800/50">
+                <span className="text-gray-400 font-semibold">AFORE</span>
+                <span className="text-gray-500 text-xs ml-1">CAPITAL</span>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Trusted Partners Carousel */}
-      {/* <section className="py-12 relative z-10 border-y border-gray-800">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center justify-center space-x-16 opacity-50">
-            <div className="text-gray-400 text-sm font-medium">Trusted by</div>
-            <div className="flex items-center space-x-16">
-              <img src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" alt="Google" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/5/51/IBM_logo_%282012%29.svg" alt="IBM" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
-              <img src="https://upload.wikimedia.org/wikipedia/commons/9/96/Microsoft_logo_%282012%29.svg" alt="Microsoft" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
-              <img src="https://logowik.com/content/uploads/images/647_toyota.jpg" alt="AWS" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
-              <img src="https://cdn.svgporn.com/logos/salesforce.svg" alt="Salesforce" className="h-6 grayscale hover:grayscale-0 transition-all duration-300" />
-            </div>
-          </div>
-        </div>
-      </section> */}
-
-      {/* Interactive Platform */}
-      <section id="platform" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl sm:text-6xl font-bold mb-6 text-white">
-              HyperSym Agentic Platform
-            </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Transform your ideas into simulations. Type anything and see magic happen.
-            </p>
-          </div>
-          <div className="flex flex-1 w-full h-full justify-center items-center">
-            <div className="w-full max-w-7xl h-[80vh] rounded-2xl shadow-2xl overflow-hidden relative mx-auto">
-              {/* Gradient Background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500 animate-gradient-x opacity-80"></div>
-              {/* Glow Effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-blue-500 via-purple-500 to-amber-500 blur-3xl opacity-50"></div>
-              {/* Video Container */}
-              <div className="relative z-10 w-full h-full flex items-center justify-center p-4">
-                <video 
-                  className="w-full h-full object-contain bg-[#0d0d0d] rounded-xl border border-[#333]"
-                  controls
-                  autoPlay
-                  muted
-                  loop
-                >
-                  <source src="/simworks_demo_v1.mp4" type="video/mp4" />
-                  Your browser does not support the video tag.
-                </video>
+      {/* Platform */}
+      <section id="platform" className="pt-1 pb-1 relative z-10 bg-gray-600">
+        <div className="w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center min-h-screen">
+            {/* Left side - Text content */}
+            <div className="order-2 lg:order-1 lg:col-span-3 text-left px-8 sm:px-12 lg:px-16 py-8 flex flex-col justify-center">
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-medium mb-3 text-white tracking-tight leading-tight font-sans">
+                Platform
+              </h2>
+              <p className="text-sm sm:text-base text-gray-300 mb-4 leading-relaxed font-normal font-sans">
+                Our integrated platform brings together simulation, AI, and collaboration tools. Design, simulate, and iterate faster with our cloud-native workspace.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Link to="/fullstack-playground">
+                  <Button 
+                    size="lg" 
+                    className="bg-black text-white hover:bg-gray-900 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden"
+                    style={{
+                      clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                    }}
+                  >
+                    Explore Platform
+                    <ArrowRight className="inline-block ml-2" size={20} />
+                  </Button>
+                </Link>
               </div>
             </div>
-          </div>
-          <div className="flex justify-center mt-8">
-            <Link to="/fullstack-playground">
-              <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-lg px-8 py-4 rounded-full font-semibold">
-                Try HyperSym Agents -&gt;
-              </Button>
-            </Link>
+            
+            {/* Right side - Video with refined overlay */}
+            <div className="order-1 lg:order-2 lg:col-span-9 px-6 py-2">
+              <div className="relative w-full rounded-3xl overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.15)] bg-black group hover:shadow-[0_40px_80px_rgba(0,0,0,0.2)] transition-shadow duration-200">
+                <div className="relative w-full" style={{paddingTop: '65%'}}>
+                  <video 
+                    className="absolute inset-0 w-full h-full object-contain transition-all duration-500"
+                    controls
+                    autoPlay
+                    muted
+                    loop
+                    playsInline
+                  >
+                    <source src="/simworks_demo_v1.mp4" type="video/mp4" />
+                    Your browser does not support the video tag.
+                  </video>
+                  
+                  {/* Bottom gradient overlay with text (only footer area) */}
+                  <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-blue-900/90 via-blue-700/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-start p-4">
+                    <div className="text-white max-w-lg">
+                      <h3 className="text-xl sm:text-2xl font-medium mb-2 font-sans">
+                        HyperSym Agentic Platform
+                      </h3>
+                      <p className="text-sm sm:text-base font-normal font-sans opacity-90">
+                        Transform your ideas into simulations. Type anything and see magic happen.
+                      </p>
+                    </div>
+                  </div>
+                  
+                  {/* Subtle gradient shadow effect */}
+                  <div className="absolute -inset-1 bg-gradient-to-r from-white/5 via-blue-500/10 to-blue-600/15 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-lg -z-10" />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* Products Section */}
-      <section id="Products" className="py-12 px-4 sm:px-6 lg:px-8 relative z-10" ref={productsRef}>
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8">
-            <h2 className="text-5xl sm:text-6xl font-bold mb-6 text-white">
-              Meet Simmy, Your AI‑Powered Simulation Co‑Pilot
+      <section id="Products" className="relative z-10 bg-gray-600">
+        <div className="w-full">
+          {/* Section Header */}
+          <div className="py-8 px-6 lg:px-8 text-left px-8 sm:px-12 lg:px-16">
+            <h2 className="text-2xl sm:text-3xl font-medium mb-3 text-white font-sans">
+              Meet Simmy! Your AI‑Powered Simulation Co‑Pilot
             </h2>
-            <p className="text-xl text-gray-400 max-w-3xl mx-auto">
-            HyperSym Agentic Suite that automate the entire design, simulation, and validation lifecycle for STEM Engineers.
-            </p>
+            <p className="text-sm sm:text-base text-gray-300 max-w-2xl font-sans">
+              HyperSym Agentic Suite that automate the entire design, simulation, and validation lifecycle for STEM Engineers.            </p>
           </div>
-          <div className={styles['perspective-1000']}>
-            <div style={cardsStyle} className="grid grid-cols-1 md:grid-cols-3 gap-8"> 
-              <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-8">
-                {/* MatCoder Card */}
-                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[260px] shadow-lg group overflow-hidden transition-colors duration-500">
-                  {/* Gradient Overlay for Hover */}
-                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
-                  <div className="text-gray-300 text-sm mb-8 z-10 relative">From natural language prompts to full Matlab processing pipelines, visualizations, and computations. What used to take weeks now happens in hours, sometimes minutes.</div>
-                  <div className="mt-auto text-2xl font-bold text-white z-10 relative">MATcoder</div>
-                </div>
-                {/* Visualize the Impossible Card (SimCoder) */}
-                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[260px] shadow-lg group overflow-hidden transition-colors duration-500">
-                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
-                  <div className="text-gray-300 text-sm mb-8 z-10 relative">Instantly transform your requirements and metadata into fully functional Simulink models with AI-powered agents that accelerate control‑system design from concept to simulation.</div>
-                  <div className="mt-auto text-2xl font-bold text-white z-10 relative">SIMcoder</div>
-                </div>
+
+          {/* Products Content */}
+          <div className="flex flex-col lg:flex-row min-h-screen">
+            {/* Left Side - Vertical List */}
+            <div className="lg:w-1/2 flex flex-col justify-start p-8 lg:p-16">
+              
+              {/* Step indicators */}
+              <div className="flex flex-col space-y-6">
+                {products.map((product, index) => (
+                  <div 
+                    key={product.id}
+                    className={`cursor-pointer transition-all duration-300 p-4 rounded-lg border-l-4 ${
+                      selectedProduct === index 
+                        ? 'border-white bg-white/5 shadow-lg' 
+                        : 'border-gray-500 hover:border-gray-300 hover:bg-white/5'
+                    }`}
+                    onClick={() => handleProductClick(index)}
+                  >
+                    <div className="flex items-center gap-4 mb-2">
+                      <div className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                        selectedProduct === index ? 'bg-white' : 'bg-gray-500'
+                      }`} />
+                      <span className={`text-xs font-semibold tracking-wider ${
+                        selectedProduct === index ? 'text-white' : 'text-gray-400'
+                      }`}>
+                        {product.badge}
+                      </span>
+                    </div>
+                    <h3 className={`text-base font-medium leading-tight transition-colors duration-300 ${
+                      selectedProduct === index ? 'text-white' : 'text-gray-400'
+                    }`}>
+                      {product.title}
+                    </h3>
+                  </div>
+                ))}
               </div>
-              <div className="flex flex-col gap-8 relative">
-                {/* Overlay for both cards */}
-                <div className="absolute inset-0 w-full h-full bg-black/80 z-20 flex items-center justify-center rounded-2xl">
-                  <span className="text-4xl md:text-5xl font-bold text-amber-400 drop-shadow-lg select-none">Coming Soon</span>
+
+              {/* GET STARTED Button */}
+              <div className="mt-8">
+                <Button 
+                  size="lg"
+                  className="bg-black text-white hover:bg-gray-900 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden"
+                  style={{
+                    clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                  }}
+                >
+                  GET STARTED <ArrowRight className="inline-block ml-2" size={20} />
+                </Button>
+              </div>
+
+            </div>
+            
+            {/* Right Side - Content Display */}
+            <div className="lg:w-1/2 flex flex-col justify-start pt-8 lg:pt-16 p-8 lg:px-16 pb-8">
+              <div 
+                className={`w-full transition-all duration-500 ease-out ${
+                  isTransitioning 
+                    ? 'transform translate-y-8 opacity-0' 
+                    : 'transform translate-y-0 opacity-100'
+                }`}
+              >
+                {/* Main graphic area - positioned at top */}
+                <div className="mb-8 flex items-center justify-center">
+                  {/* Hero gradient box with narrow borders */}
+                  <div 
+                    className="rounded-2xl p-4 relative overflow-hidden"
+                    style={{
+                      background: `radial-gradient(circle at 0% 100%, #eaf6ff 0%, #3e7cb1 22%, transparent 45%), 
+                                  radial-gradient(ellipse 120% 80% at 75% 50%, transparent 0%, transparent 35%, rgba(16, 22, 36, 0.6) 50%, #000000 65%, #000000 100%),
+                                  linear-gradient(90deg, transparent 0%, rgb(14, 22, 42) 25%, #101624 45%, rgba(0, 0, 0, 0.8) 58%, #000000 62%, #000000 100%)`
+                    }}
+                  >
+                    {/* Lorenz Attractor Visualization */}
+                    <img 
+                      src="/hypersym_platform_simulation.png" 
+                      alt="Lorenz Attractor Simulation" 
+                      className="object-contain rounded-lg"
+                      style={{ 
+                        height: '380px',
+                        width: 'auto',
+                        maxWidth: '100%',
+                        filter: 'brightness(1.1) contrast(1.05)'
+                      }}
+                    />
+                  </div>
                 </div>
-                {/* Synergy and Style Card (CfdCoder) */}
-                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[180px] shadow-lg group overflow-hidden transition-colors duration-500 z-10">
-                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
-                  <div className="text-gray-300 text-sm mb-8 z-30 relative">Leverage intelligent agents to convert your CFD queries and metadata into high‑fidelity fluid‑dynamics simulations with automated mesh setup and solver optimization.</div>
-                  <div className="mt-auto text-2xl font-bold text-white z-30 relative">CFDcoder</div>
-                </div>
-                {/* Timeless Precision Card (CadCoder) */}
-                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[180px] shadow-lg group overflow-hidden transition-colors duration-500 z-10">
-                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
-                  <div className="text-gray-300 text-sm mb-8 z-30 relative">Deploy AI agents to interpret your design inputs and metadata into precise CAD simulations, streamlining 3D modeling, assembly validation, and engineering analysis.</div>
-                  <div className="mt-auto text-2xl font-bold text-white z-30 relative">CADcoder</div>
+                
+                {/* Content description - positioned below graphic */}
+                <div className="text-left">
+                  <h2 className="text-2xl font-medium text-white mb-4">
+                    {products[selectedProduct].title}
+                  </h2>
+                  <p className="text-gray-300 text-sm leading-relaxed">
+                    {products[selectedProduct].description}
+                  </p>
                 </div>
               </div>
             </div>
@@ -558,27 +746,48 @@ const Index = () => {
       </section>
 
       {/* Research Section */}
-      <section id="research" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
+      <section id="research" className="py-12 px-6 relative z-10 bg-white" style={{borderRadius: '50px 50px 0 0', marginTop: '-50px', paddingTop: '62px'}}>
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-5xl sm:text-6xl font-bold mb-12 text-center text-white">HyperSym Research</h2>
-          <div className="flex flex-col md:flex-row items-center md:items-stretch gap-4">
-            {/* Left side: placeholder for future content */}
-            <div className="flex-1 flex flex-col justify-center items-start mb-8 md:mb-0">
-              <h2 className="text-4xl sm:text-5xl font-bold mb-6 text-white">Advancing Agentic Systems for Simulations</h2>
-              <p className="text-lg text-gray-300 mb-8 max-w-lg">We value continuous research and innovation in our agentic systems. Our research is focused on the development and evaluation of AI agents for industry-grade simulations. We support research labs in utilizing our state-of-the-art AI agents in their ecosystem to produce their own simulation-based research.</p>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+            {/* Left side content */}
+            <div>
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium mb-2 text-gray-900 font-sans">HyperSym Research</h2>
+              <h3 className="text-xl sm:text-2xl font-medium mb-6 text-gray-800 font-sans">Advancing Agentic Systems for Simulations</h3>
+              <p className="text-base text-gray-600 mb-8 leading-relaxed font-normal font-sans">
+                We value continuous research and innovation in our agentic systems. Our research is focused on the development and evaluation of AI agents for industry-grade simulations. We support research labs in utilizing our state-of-the-art AI agents in their ecosystem to produce their own simulation-based research.
+              </p>
               <Link to="/get-started">
-                <button className="bg-[#8B5CF6] hover:bg-[#7C3AED] text-white font-semibold px-8 py-3 rounded-xl text-lg transition">Apply for HyperSym Research Program</button>
+                <Button 
+                  size="lg" 
+                  className="bg-gray-900 text-white hover:bg-gray-800 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden"
+                  style={{
+                    clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                  }}
+                >
+                  Apply for Research Program
+                  <ArrowRight className="inline-block ml-2" size={20} />
+                </Button>
               </Link>
             </div>
-            {/* Right side: Research card styled like product cards, empty for user content */}
-            <div className="flex-1 flex items-center justify-center">
-              <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="w-full max-w-md">
-                <div className="relative bg-[#191A1F] rounded-2xl p-7 flex flex-col min-h-[260px] shadow-lg group overflow-hidden transition-colors duration-500 w-full max-w-md cursor-pointer hover:ring-2 hover:ring-blue-500 focus:outline-none">
-                  {/* Gradient Overlay for Hover */}
-                  <div className="pointer-events-none absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0 group-hover:animate-gradient-x bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500"></div>
-                  {/* Card body left empty for user content */}
-                  <div className="text-gray-300 text-sm mb-8 z-10 relative">OctCoder is an agentic framework that simplifies simulation creation and execution in GNU Octave. It uses natural language inputs to generate, run, and summarize simulations via interconnected AI agents. A user-friendly Gradio web interface enables seamless interaction.</div>
-                  <div className="mt-auto text-2xl font-bold text-white z-10 relative">OCTcoder</div>
+            
+            {/* Right side - OCTcoder card */}
+            <div>
+              <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="block">
+                <div className="bg-gray-100 border border-gray-200 rounded-xl p-8 transition-all duration-300 hover:shadow-lg">
+                  <div className="mb-6">
+                    <div className="flex items-center justify-between mb-4">
+                      <h3 className="text-2xl font-medium text-gray-900 font-sans">OCTcoder</h3>
+                      <span className="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium">Open Source</span>
+                    </div>
+                    <p className="text-gray-600 leading-relaxed font-sans">
+                      OctCoder is an agentic framework that simplifies simulation creation and execution in GNU Octave. It uses natural language inputs to generate, run, and summarize simulations via interconnected AI agents. A user-friendly Gradio web interface enables seamless interaction.
+                    </p>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <span className="text-sm text-gray-500">View on GitHub</span>
+                    <ArrowRight className="text-gray-400" size={20} />
+                  </div>
                 </div>
               </a>
             </div>
@@ -586,132 +795,109 @@ const Index = () => {
         </div>
       </section>
 
-      {/* Pricing Section */}
-      <section id="pricing" className="py-20 px-4 sm:px-6 lg:px-8 bg-black">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-5xl sm:text-6xl font-bold mb-4 text-white">Pricing</h2>
-          </div>
-          <div className="relative max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Rectangle blur overlay spanning all cards, now in front */}
-            <div className="absolute inset-0 w-full h-full backdrop-blur-md bg-black/70 z-40" style={{ borderRadius: 0 }}></div>
-            {/* Pricing Cards (unchanged) */}
-            <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="relative bg-[#23242a] rounded-2xl p-8 flex flex-col shadow-md min-h-[600px] transition hover:ring-2 hover:ring-blue-500 focus:outline-none cursor-pointer z-30">
-              <div className="text-3xl font-bold text-white mb-2">Open Source</div>
-              <div className="text-base text-white mb-8">For Hackers, hobbyists, FOSS projects that run Cua locally or on their own cloud.</div>
-              <div className="text-4xl font-bold text-white mb-12">Free</div>
-              <div className="mt-auto">
-                <div className="text-white font-semibold mb-4">What's included</div>
-                <ul className="space-y-3 mb-8">
-                  <li className="flex items-center gap-3 text-white"><span className="inline-block w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#A3A3A3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>AGPL-3.0 license Core</li>
-                  <li className="flex items-center gap-3 text-white"><span className="inline-block w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#A3A3A3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Unlimited Local Agents</li>
-                  <li className="flex items-center gap-3 text-white"><span className="inline-block w-6 h-6 bg-gray-700 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#A3A3A3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Community Discord and Docs</li>
-                </ul>
-                <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="w-full bg-white text-blue-600 rounded-full py-3 font-semibold shadow hover:bg-blue-50 transition text-lg flex items-center justify-center gap-2"><span>Get Started</span></a>
-              </div>
-            </a>
-            <div className="relative rounded-2xl p-0 flex flex-col shadow-2xl min-h-[600px] overflow-hidden text-white border-2 border-blue-500 bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500 z-30">
-              {/* Most Popular badge */}
-              <div className="absolute top-6 right-6 bg-white text-blue-600 text-xs font-bold px-4 py-1 rounded-full shadow">Most Popular</div>
-              <div className="p-8 flex flex-col flex-1">
-                <div className="text-3xl font-bold mb-2">Team</div>
-                <div className="text-base mb-6">Teams that want hosted agents with no infrastructure headaches.</div>
-                <div className="text-5xl font-bold mb-2">$75</div>
-                <div className="mb-4"><span className="inline-block bg-white/90 text-green-600 font-semibold px-4 py-1 rounded-full text-sm">-0% discount applied</span></div>
-                {/* Slider */}
-                <div className="flex items-center justify-between mb-4">
-                  <span className="text-white/80 text-sm font-semibold">$75</span>
-                  <div className="flex-1 mx-2 flex items-center gap-2">
-                    <span className="w-4 h-4 bg-white rounded-full border-2 border-blue-400" />
-                    <span className="w-4 h-4 bg-white/30 rounded-full border-2 border-blue-400" />
-                    <span className="w-4 h-4 bg-white/30 rounded-full border-2 border-blue-400" />
-                    <span className="w-4 h-4 bg-white/30 rounded-full border-2 border-blue-400" />
-                    <span className="w-4 h-4 bg-white/30 rounded-full border-2 border-blue-400" />
-                  </div>
-                  <span className="text-white/80 text-sm font-semibold">$1000</span>
-                </div>
-                <div className="text-lg font-bold mb-1">5,100 credits</div>
-                <div className="text-white/80 text-sm mb-8">425h typical runtime</div>
-                <div className="mt-auto">
-                  <div className="text-white/80 font-semibold mb-4">What's included</div>
-                  <ul className="space-y-3 mb-8">
-                    <li className="flex items-center gap-3"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Complete access to SOTA HyperSym Agents, we support (macOS, Linux, Windows)</li>
-                    <li className="flex items-center gap-3"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Usage metered in universal credits</li>
-                    <li className="flex items-center gap-3"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Email and Slack support</li>
-                  </ul>
-                  <a href="https://cal.com/get-simmy/30min" target="_blank" rel="noopener noreferrer" className="w-full bg-white text-blue-600 rounded-full py-3 font-semibold shadow hover:bg-blue-50 transition text-lg flex items-center justify-center gap-2"><span>Purchase Credits</span></a>
-                </div>
-              </div>
-            </div>
-            <div className="relative rounded-2xl p-0 flex flex-col shadow-md min-h-[600px] overflow-hidden bg-gradient-to-br from-blue-900 via-indigo-900 to-amber-500 text-white z-30">
-              <div className="p-8">
-                <div className="text-3xl font-bold text-white mb-2">Enterprise</div>
-                <div className="text-base text-white">Custom cloud services — contact sales for a quote.</div>
-              </div>
-              <div className="flex-1 flex flex-col p-8 pt-4">
-                <div className="mt-auto">
-                  <div className="text-white font-semibold mb-4">What's included</div>
-                  <ul className="space-y-3 mb-8">
-                    <li className="flex items-center gap-3 text-white"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>Everything in Pro</li>
-                    <li className="flex items-center gap-3 text-white"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>24/7 support</li>
-                    <li className="flex items-center gap-3 text-white"><span className="inline-block w-6 h-6 bg-white/20 rounded-full flex items-center justify-center"><svg width="16" height="16" fill="none" viewBox="0 0 16 16"><circle cx="8" cy="8" r="8" fill="#fff" fillOpacity=".3"/><path d="M5 8.5l2 2 4-4" stroke="#fff" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>HIPAA, SOC Type 1/2 Reports</li>
-                  </ul>
-                  <a href="https://cal.com/get-simmy/30min" target="_blank" rel="noopener noreferrer" className="w-full bg-white text-blue-600 rounded-full py-3 font-semibold shadow hover:bg-blue-50 transition text-lg flex items-center justify-center gap-2"><span>Book a Demo</span><svg xmlns='http://www.w3.org/2000/svg' className='inline-block ml-1' width='20' height='20' fill='none' viewBox='0 0 24 24'><rect x='3' y='4' width='18' height='18' rx='4' fill='none' stroke='#000' strokeWidth='2'/><path d='M16 2v4M8 2v4M3 10h18' stroke='#000' strokeWidth='2' strokeLinecap='round'/></svg></a>
-                </div>
-              </div>
-            </div>
-            {/* Centered button on top of blur */}
-            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-50 flex flex-col items-center justify-center w-full">
-              <Link to="/signin">
-                <button className="bg-white text-black font-semibold text-lg px-8 py-4 rounded-full shadow-lg hover:bg-gray-100 transition-all duration-200 flex items-center gap-2 pointer-events-auto">
-                  Get Simmy, It is Free :)
-                  <span className="ml-1">→</span>
-                </button>
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Testimonials */}
-      {/* <section id="testimonials" className="py-20 px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-5xl sm:text-6xl font-bold mb-6 text-white">
-              Loved by 10x STEM Engineers
-            </h2>
-          </div>
-          <div className="overflow-hidden w-full">
-            <div className="flex gap-8 animate-testimonial-scroll">
-              {testimonials.concat(testimonials).map((t, idx) => (
-                <div key={idx} className="w-full sm:w-[340px] md:w-[320px] flex-shrink-0">
-                  <TestimonialCard
-                    quote={t.quote}
-                    author={t.author}
-                    avatar={t.avatar}
-                    bgColor={t.bgColor}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section> */}
 
       {/* CTA */}
-      <section className="py-32 px-4 sm:px-6 lg:px-8 relative z-10 bg-black">
-        <div className="max-w-4xl mx-auto text-center relative z-20">
-          <h2 className="text-6xl sm:text-7xl font-bold mb-8 text-white leading-tight">
-            Ready to Create the Impossible?
-          </h2>
-          <p className="text-2xl text-gray-400 mb-12 leading-relaxed">
-            Join the revolution. Build the future.
-          </p>
-          <Link to="/get-started">
-            <Button size="lg" className="bg-white text-black hover:bg-gray-200 text-xl px-12 py-6 rounded-full transform hover:scale-110 transition-all duration-300">
-              Start Your Journey
-            </Button>
-          </Link>
+      <section className="py-24 px-6 relative z-10 bg-white">
+        <div className="max-w-7xl mx-auto">
+          <div 
+            className="rounded-3xl p-12 lg:p-16 relative overflow-hidden"
+            style={{
+              background: `radial-gradient(circle at 0% 50%, rgba(234, 246, 255, 0.4) 0%, #3e7cb1 20%, #1e3a8a 40%, transparent 60%), 
+                          linear-gradient(90deg, transparent 0%, #1e3a8a 30%, #0f172a 60%, #000000 100%)`
+            }}
+          >
+            {/* Enhanced Line Pattern Overlay */}
+            <div
+              className="absolute inset-0 z-10 pointer-events-none"
+              style={{
+                background:
+                  `repeating-linear-gradient(
+                    to bottom,
+                    rgba(255,255,255,0.15) 0px,
+                    rgba(255,255,255,0.15) 1px,
+                    transparent 1px,
+                    transparent 25px
+                  ),
+                  repeating-linear-gradient(
+                    to right,
+                    rgba(255,255,255,0.12) 0px,
+                    rgba(255,255,255,0.12) 1px,
+                    transparent 1px,
+                    transparent 40px
+                  ),
+                  repeating-linear-gradient(
+                    45deg,
+                    rgba(255,255,255,0.06) 0px,
+                    rgba(255,255,255,0.06) 1px,
+                    transparent 1px,
+                    transparent 50px
+                  ),
+                  repeating-linear-gradient(
+                    -45deg,
+                    rgba(255,255,255,0.04) 0px,
+                    rgba(255,255,255,0.04) 1px,
+                    transparent 1px,
+                    transparent 70px
+                  )`,
+                maskImage: 'linear-gradient(to right, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.05) 80%, rgba(0,0,0,0) 100%)',
+              }}
+            />
+            {/* Subtle corner lines */}
+            <div className="pointer-events-none absolute inset-0 z-10">
+              {/* Top-left corner */}
+              <svg width="80" height="80" className="absolute left-0 top-0" style={{opacity:0.18}}>
+                <polyline points="0,40 0,0 40,0" fill="none" stroke="#fff" strokeWidth="1.5" />
+              </svg>
+              {/* Bottom-right corner */}
+              <svg width="80" height="80" className="absolute right-0 bottom-0" style={{opacity:0.18}}>
+                <polyline points="40,80 80,80 80,40" fill="none" stroke="#fff" strokeWidth="1.5" />
+              </svg>
+            </div>
+            {/* Gradient overlays for extra depth */}
+            <div className="absolute inset-0 z-10 pointer-events-none">
+              {/* Bottom gradient glow */}
+              <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-[#1a2747]/30 to-transparent" />
+              {/* Blue accent light from bottom left */}
+              <div className="absolute bottom-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-blue-600/15 blur-[200px]" />
+            </div>
+            
+            <div className="max-w-4xl mx-auto relative z-10">
+              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium mb-6 text-white font-sans">
+                Ready to Revolutionize Your Simulations?
+              </h2>
+              <p className="text-lg text-gray-300 mb-10 font-normal font-sans">
+                Join thousands of engineers who are already using HyperSym to accelerate their development cycles.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                <Link to="/get-started">
+                  <Button 
+                    size="lg" 
+                    className="bg-white text-gray-900 hover:bg-gray-100 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden w-full sm:w-auto"
+                    style={{
+                      clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
+                    }}
+                  >
+                    Schedule a Demo
+                    <ArrowRight className="inline-block ml-2" size={20} />
+                  </Button>
+                </Link>
+                <Link to="/signin">
+                  <Button 
+                    size="lg" 
+                    className="bg-transparent text-white border-2 border-white/70 hover:bg-white hover:text-gray-900 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg relative overflow-hidden w-full sm:w-auto"
+                    style={{
+                      clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+                      boxShadow: '0 4px 12px rgba(255,255,255,0.1)'
+                    }}
+                  >
+                    Try for Free
+                    <ArrowRight className="inline-block ml-2" size={20} />
+                  </Button>
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 

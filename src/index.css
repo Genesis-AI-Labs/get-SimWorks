@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -122,4 +124,41 @@
 }
 .animate-testimonial-scroll {
   animation: testimonial-scroll 30s linear infinite;
+}
+
+/* Custom background colors */
+.bg-gray-850 {
+  background-color: rgb(31, 41, 55);
+}
+
+/* Hero gradient animation */
+@keyframes gradient-shift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 8s ease infinite;
+}
+
+/* Glow effects */
+.hero-glow {
+  filter: blur(100px);
+  opacity: 0.5;
+}
+
+/* Text gradient */
+.text-gradient {
+  background: linear-gradient(135deg, #FF0080 0%, #7928CA 50%, #4F46E5 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
