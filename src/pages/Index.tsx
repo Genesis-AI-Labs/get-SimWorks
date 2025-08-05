@@ -551,14 +551,14 @@ const Index = () => {
         <div className="absolute bottom-8 left-0 right-0">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center gap-8 text-sm">
-              <span className="text-gray-500">Backed By</span>
-              <div className="flex items-center gap-2 px-4 py-2 bg-[#1a1f2a] rounded border border-gray-800/50">
+              <span className="text-gray-500">Building At</span>
+{/*               <div className="flex items-center gap-2 px-4 py-2 bg-[#1a1f2a] rounded border border-gray-800/50">
                 <div className="w-6 h-6 bg-orange-500 rounded flex items-center justify-center text-white font-bold text-xs">Y</div>
                 <span className="text-gray-400">Combinator</span>
-              </div>
+              </div> */}
               <div className="px-4 py-2 bg-[#1a1f2a] rounded border border-gray-800/50">
-                <span className="text-gray-400 font-semibold">AFORE</span>
-                <span className="text-gray-500 text-xs ml-1">CAPITAL</span>
+                <span className="text-gray-400 font-semibold">LossFunk</span>
+{/*                 <span className="text-gray-500 text-xs ml-1">CAPITAL</span> */}
               </div>
             </div>
           </div>
