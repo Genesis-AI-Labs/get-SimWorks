@@ -485,8 +485,8 @@ const Index = () => {
           {/* Blue accent light from bottom left */}
           <div className="absolute bottom-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-blue-600/15 blur-[200px]" />
         </div>
-        <div className="relative z-20 max-w-8xl mx-auto w-full px-8 sm:px-12 lg:px-16">
-          <div className="flex flex-col lg:flex-row items-center gap-8 min-h-screen">
+        <div className="relative z-20 max-w-8xl mx-auto w-full px-8 sm:px-12 lg:px-16 pb-4">
+          <div className="flex flex-col lg:flex-row items-center gap-8 min-h-[75vh]">
             <div className="lg:w-3/5 w-full space-y-10">
               <div className="space-y-8">
                 <h1 className="text-5xl sm:text-6xl lg:text-7xl font-extrabold leading-[1.1] tracking-tight text-white drop-shadow-lg">
@@ -550,6 +550,7 @@ const Index = () => {
         {/* Backed By section - positioned at bottom */}
         <div className="absolute bottom-8 left-0 right-0">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<<<<<<< HEAD
             <div className="flex items-center gap-8 text-sm">
               <span className="text-gray-500">Building At</span>
 {/*               <div className="flex items-center gap-2 px-4 py-2 bg-[#1a1f2a] rounded border border-gray-800/50">
@@ -561,13 +562,50 @@ const Index = () => {
 {/*                 <span className="text-gray-500 text-xs ml-1">CAPITAL</span> */}
               </div>
             </div>
+=======
+            <a 
+              href="https://lossfunk.com/" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-black text-xs hover:underline"
+            >
+              Backed by Lossfunk
+            </a>
+>>>>>>> 39ae8ce (landing page revamp-v0.21)
           </div>
         </div>
       </section>
 
       {/* Platform */}
-      <section id="platform" className="pt-1 pb-1 relative z-10 bg-gray-600">
-        <div className="w-full">
+      <section 
+        id="platform" 
+        className="pt-1 pb-1 relative z-10 overflow-hidden"
+        style={{
+          background: '#000000'
+        }}
+      >
+        {/* White grid lines overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-10"
+          style={{
+            background:
+              `repeating-linear-gradient(
+                to bottom,
+                rgba(255,255,255,0.4) 0px,
+                rgba(255,255,255,0.4) 1px,
+                transparent 1px,
+                transparent 40px
+              ),
+              repeating-linear-gradient(
+                to right,
+                rgba(255,255,255,0.4) 0px,
+                rgba(255,255,255,0.4) 1px,
+                transparent 1px,
+                transparent 40px
+              )`
+          }}
+        />
+        <div className="w-full relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-0 items-center min-h-screen">
             {/* Left side - Text content */}
             <div className="order-2 lg:order-1 lg:col-span-3 text-left px-8 sm:px-12 lg:px-16 py-8 flex flex-col justify-center">
@@ -581,10 +619,10 @@ const Index = () => {
                 <Link to="/fullstack-playground">
                   <Button 
                     size="lg" 
-                    className="bg-black text-white hover:bg-gray-900 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden"
+                    className="bg-white text-black hover:bg-gray-100 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden"
                     style={{
                       clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                      boxShadow: '0 4px 12px rgba(255,255,255,0.3)'
                     }}
                   >
                     Explore Platform
@@ -594,12 +632,12 @@ const Index = () => {
               </div>
             </div>
             
-            {/* Right side - Video with refined overlay */}
+            {/* Right side - Video with simple effect */}
             <div className="order-1 lg:order-2 lg:col-span-9 px-6 py-2">
-              <div className="relative w-full rounded-3xl overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.15)] bg-black group hover:shadow-[0_40px_80px_rgba(0,0,0,0.2)] transition-shadow duration-200">
+              <div className="relative w-full rounded-3xl overflow-hidden shadow-[0_32px_64px_rgba(0,0,0,0.15)] bg-black transition-all duration-300 hover:scale-[1.02]">
                 <div className="relative w-full" style={{paddingTop: '65%'}}>
                   <video 
-                    className="absolute inset-0 w-full h-full object-contain transition-all duration-500"
+                    className="absolute inset-0 w-full h-full object-contain"
                     controls
                     autoPlay
                     muted
@@ -609,21 +647,6 @@ const Index = () => {
                     <source src="/simworks_demo_v1.mp4" type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
-                  
-                  {/* Bottom gradient overlay with text (only footer area) */}
-                  <div className="absolute bottom-0 left-0 right-0 h-1/3 bg-gradient-to-t from-blue-900/90 via-blue-700/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end justify-start p-4">
-                    <div className="text-white max-w-lg">
-                      <h3 className="text-xl sm:text-2xl font-medium mb-2 font-sans">
-                        HyperSym Agentic Platform
-                      </h3>
-                      <p className="text-sm sm:text-base font-normal font-sans opacity-90">
-                        Transform your ideas into simulations. Type anything and see magic happen.
-                      </p>
-                    </div>
-                  </div>
-                  
-                  {/* Subtle gradient shadow effect */}
-                  <div className="absolute -inset-1 bg-gradient-to-r from-white/5 via-blue-500/10 to-blue-600/15 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 blur-lg -z-10" />
                 </div>
               </div>
             </div>
@@ -632,8 +655,35 @@ const Index = () => {
       </section>
 
       {/* Products Section */}
-      <section id="Products" className="relative z-10 bg-gray-600">
-        <div className="w-full">
+      <section 
+        id="Products" 
+        className="relative z-10 overflow-hidden"
+        style={{
+          background: '#000000'
+        }}
+      >
+        {/* White grid lines overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none opacity-10"
+          style={{
+            background:
+              `repeating-linear-gradient(
+                to bottom,
+                rgba(255,255,255,0.4) 0px,
+                rgba(255,255,255,0.4) 1px,
+                transparent 1px,
+                transparent 40px
+              ),
+              repeating-linear-gradient(
+                to right,
+                rgba(255,255,255,0.4) 0px,
+                rgba(255,255,255,0.4) 1px,
+                transparent 1px,
+                transparent 40px
+              )`
+          }}
+        />
+        <div className="w-full relative z-10">
           {/* Section Header */}
           <div className="py-8 px-6 lg:px-8 text-left px-8 sm:px-12 lg:px-16">
             <h2 className="text-2xl sm:text-3xl font-medium mb-3 text-white font-sans">
@@ -683,10 +733,10 @@ const Index = () => {
               <div className="mt-8">
                 <Button 
                   size="lg"
-                  className="bg-black text-white hover:bg-gray-900 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden"
+                  className="bg-white text-black hover:bg-gray-100 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden"
                   style={{
                     clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                    boxShadow: '0 4px 12px rgba(255,255,255,0.3)'
                   }}
                 >
                   GET STARTED <ArrowRight className="inline-block ml-2" size={20} />
@@ -705,25 +755,25 @@ const Index = () => {
                 }`}
               >
                 {/* Main graphic area - positioned at top */}
-                <div className="mb-8 flex items-center justify-center">
-                  {/* Hero gradient box with narrow borders */}
+                <div className="mb-6 w-full flex items-center justify-center">
+                  {/* Hero gradient box with very thin borders */}
                   <div 
-                    className="rounded-2xl p-4 relative overflow-hidden"
+                    className="rounded-xl p-4 relative overflow-hidden inline-block"
                     style={{
                       background: `radial-gradient(circle at 0% 100%, #eaf6ff 0%, #3e7cb1 22%, transparent 45%), 
                                   radial-gradient(ellipse 120% 80% at 75% 50%, transparent 0%, transparent 35%, rgba(16, 22, 36, 0.6) 50%, #000000 65%, #000000 100%),
                                   linear-gradient(90deg, transparent 0%, rgb(14, 22, 42) 25%, #101624 45%, rgba(0, 0, 0, 0.8) 58%, #000000 62%, #000000 100%)`
                     }}
                   >
-                    {/* Lorenz Attractor Visualization */}
+                    {/* Platform Visualization */}
                     <img 
                       src="/hypersym_platform_simulation.png" 
-                      alt="Lorenz Attractor Simulation" 
-                      className="object-contain rounded-lg"
+                      alt="Simulation Platform" 
+                      className="object-contain rounded-lg block w-full h-full"
                       style={{ 
-                        height: '380px',
-                        width: 'auto',
-                        maxWidth: '100%',
+                        height: '420px',
+                        width: '780px',
+                        maxWidth: 'calc(90vw - 2rem)',
                         filter: 'brightness(1.1) contrast(1.05)'
                       }}
                     />
@@ -746,7 +796,7 @@ const Index = () => {
       </section>
 
       {/* Research Section */}
-      <section id="research" className="py-12 px-6 relative z-10 bg-white" style={{borderRadius: '50px 50px 0 0', marginTop: '-50px', paddingTop: '62px'}}>
+      <section id="research" className="py-24 px-6 relative z-10 bg-white" style={{borderRadius: '50px 50px 0 0', marginTop: '-50px', paddingTop: '74px'}}>
         <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Left side content */}
@@ -774,7 +824,7 @@ const Index = () => {
             {/* Right side - OCTcoder card */}
             <div>
               <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="block">
-                <div className="bg-gray-100 border border-gray-200 rounded-xl p-8 transition-all duration-300 hover:shadow-lg">
+                <div className="bg-gray-50 border border-gray-200 rounded-xl p-8 hover:border-gray-300 transition-all duration-300 hover:shadow-lg">
                   <div className="mb-6">
                     <div className="flex items-center justify-between mb-4">
                       <h3 className="text-2xl font-medium text-gray-900 font-sans">OCTcoder</h3>
