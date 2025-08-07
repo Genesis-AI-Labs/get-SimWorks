@@ -279,6 +279,7 @@ const Index = () => {
   const [typing, setTyping] = useState(true);
   const [testimonialIdx, setTestimonialIdx] = useState(0);
   const visibleCount = 3;
+  const pauseTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   // Scroll to top on mount to prevent auto-scrolling
   useEffect(() => {
@@ -342,6 +343,7 @@ const Index = () => {
   const [researchDropdownOpen, setResearchDropdownOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isPaused, setIsPaused] = useState(false);
 
   const handleProductClick = (index: number) => {
     if (index !== selectedProduct) {
@@ -351,36 +353,77 @@ const Index = () => {
         setIsTransitioning(false);
       }, 300);
     }
+    
+    // Pause auto-rotation when user clicks
+    setIsPaused(true);
+    
+    // Clear any existing timeout
+    if (pauseTimeoutRef.current) {
+      clearTimeout(pauseTimeoutRef.current);
+    }
+    
+    // Resume auto-rotation after 10 seconds
+    pauseTimeoutRef.current = setTimeout(() => {
+      setIsPaused(false);
+    }, 10000);
   };
+
+  // Auto-rotate products
+  useEffect(() => {
+    if (!isPaused) {
+      const interval = setInterval(() => {
+        setIsTransitioning(true);
+        setTimeout(() => {
+          setSelectedProduct((prev) => (prev + 1) % 2);
+          setIsTransitioning(false);
+        }, 300);
+      }, 4000); // Change every 4 seconds
+      
+      return () => clearInterval(interval);
+    }
+  }, [isPaused]);
+  
+  // Cleanup timeout on unmount
+  useEffect(() => {
+    return () => {
+      if (pauseTimeoutRef.current) {
+        clearTimeout(pauseTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const products = [
     {
       id: 0,
-      title: "Transparent Data Delivery with Benchmark Insights",
-      description: "Access your data through our visual dataset viewer, complete with benchmark scores and quality metrics. You'll see exactly what was built, how it performs, and where it fits in your development pipeline. We offer unlimited revisions until you're confident in every datapoint—so you can move forward with certainty, not assumptions.",
-      badge: "DELIVERY",
-      color: "blue"
+      title: "Conversational MBD for MATLAB & Simulink",
+      description: "Describe your simulation requirements in plain language, and watch Simmy, our AI Co-Pilot, take over. Our agentic platform interprets your project needs to write, debug, and execute sophisticated code in MATLAB and Simulink. Go from an idea to a fully realized Model-Based Design (MBD) and validated results through an intuitive chat interface. Simmy handles the tedious coding and project setup, allowing you to focus on engineering innovation.",
+      badge: "Agentic Simulation & Modeling.",
+      color: "blue",
+      image: "/hypersym_platform_simulation.png"
     },
     {
       id: 1,
-      title: "Kick Off Data Creation with Top Talent on Our Gamified Platform", 
-      description: "Once your needs are defined, our curated pool of world-class engineers and annotators gets to work. Using our proprietary gamified platform, we drive high engagement, precision, and speed—ensuring your data is generated and labeled by top performers incentivized to solve real AI problems, not just complete tasks. Our users include top software & research engineers at leading companies & startups.",
-      badge: "DATA CREATION",
-      color: "green"
+      title: "Master Complex Physics without the Complexity", 
+      description: "Leverage the power of advanced, open-source solvers like OpenFOAM through our unified agentic interface. Our platform streamlines the entire Computational Fluid Dynamics (CFD) workflow, from model setup and meshing to execution and post-processing. Let Simmy manage the intricate software dependencies and commands, enabling you to perform high-fidelity CFD simulations with unprecedented ease and speed.",
+      badge: "Agentic CFD Simulations with OpenFOAM.",
+      color: "green",
+      image: "/CFD_simulations_hypersym.png"
     },
     {
       id: 2,
       title: "Quality Check with Advanced Validation Systems",
-      description: "Every piece of data goes through our multi-layered quality assurance process. Our advanced validation systems ensure accuracy, consistency, and reliability before delivery. Real-time monitoring and automated checks catch issues early, maintaining the highest standards throughout the entire pipeline.",
-      badge: "QUALITY CHECK", 
-      color: "purple"
+      description: "Achieve end-to-end compliance effortlessly. Provide Simmy with any requirements document—from industry standards in PDF format to internal project specifications. Our agents will parse the document, automatically generate the necessary verification scripts, and test them against your Model-Based Designs. Eliminate manual scripting errors and ensure your projects are fully compliant and validated from the start.",
+      badge: "Automated Validation & Compliance.", 
+      color: "purple",
+      image: "/compliance_pdf_hypersym.png"
     },
     {
       id: 3,
-      title: "Evaluation and Performance Optimization",
-      description: "Comprehensive evaluation metrics and performance analysis help you understand exactly how your data performs. Our evaluation framework provides detailed insights into model performance, data quality scores, and optimization recommendations to ensure your AI systems achieve peak performance.",
-      badge: "EVALUATION",
-      color: "orange"
+      title: "Agentic Processing for Large-Scale Enterprize Data and Analytics.",
+      description: "Stop wrestling with massive data files. Simply upload your industrial simulation data and instruct Simmy on the analysis you need. From pre-processing raw outputs to generating complex visualizations and performing deep analytics, our platform provides a complete, chat-driven solution. Instantly find correlations, identify anomalies, and extract the critical insights needed to make informed decisions.",
+      badge: "Intelligent Data Analysis.",
+      color: "orange",
+      image: "/data_viz_hypersym.png"
     }
   ];
 
@@ -751,13 +794,15 @@ const Index = () => {
                   >
                     {/* Platform Visualization */}
                     <img 
-                      src="/hypersym_platform_simulation.png" 
-                      alt="Simulation Platform" 
-                      className="object-contain rounded-lg block w-full h-full"
+                      src={products[selectedProduct].image} 
+                      alt={products[selectedProduct].title} 
+                      className="object-contain rounded-lg block"
                       style={{ 
-                        height: '420px',
-                        width: '780px',
-                        maxWidth: 'calc(90vw - 2rem)',
+                        width: '90%',
+                        height: '90%',
+                        maxWidth: '700px',
+                        maxHeight: '380px',
+                        margin: 'auto',
                         filter: 'brightness(1.1) contrast(1.05)'
                       }}
                     />
