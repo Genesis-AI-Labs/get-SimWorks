@@ -8,7 +8,7 @@ import BenefitCard from "@/components/BenefitCard";
 import Footer from "@/components/Footer";
 import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { createClient } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabaseClient';
 import HoverDropdown from "@/components/HoverDropdown";
 
 const testimonials = [
@@ -881,8 +881,8 @@ const Index = () => {
           <div 
             className="rounded-3xl p-12 lg:p-16 relative overflow-hidden"
             style={{
-              background: `radial-gradient(circle at 0% 50%, rgba(234, 246, 255, 0.4) 0%, #3e7cb1 20%, #1e3a8a 40%, transparent 60%), 
-                          linear-gradient(90deg, transparent 0%, #1e3a8a 30%, #0f172a 60%, #000000 100%)`
+              background: `radial-gradient(circle at 95% 50%, rgba(234, 246, 255, 0.15) 0%, #3e7cb1 5%, #1e3a8a 15%, #0f172a 25%, #000000 30%, transparent 35%), 
+                          linear-gradient(90deg, #000000 0%, #000000 60%, #0f172a 70%, #1e3a8a 85%, #3e7cb1 95%, rgba(234, 246, 255, 0.2) 100%)`
             }}
           >
             {/* Enhanced Line Pattern Overlay */}
@@ -918,7 +918,7 @@ const Index = () => {
                     transparent 1px,
                     transparent 70px
                   )`,
-                maskImage: 'linear-gradient(to right, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.05) 80%, rgba(0,0,0,0) 100%)',
+                maskImage: 'linear-gradient(to left, rgba(0,0,0,0.5) 0%, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.15) 60%, rgba(0,0,0,0.05) 80%, rgba(0,0,0,0) 100%)',
               }}
             />
             {/* Subtle corner lines */}
@@ -936,44 +936,78 @@ const Index = () => {
             <div className="absolute inset-0 z-10 pointer-events-none">
               {/* Bottom gradient glow */}
               <div className="absolute bottom-0 left-0 right-0 h-[40%] bg-gradient-to-t from-[#1a2747]/30 to-transparent" />
-              {/* Blue accent light from bottom left */}
-              <div className="absolute bottom-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-blue-600/15 blur-[200px]" />
+              {/* Blue accent light from bottom right */}
+              <div className="absolute bottom-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-blue-600/15 blur-[200px]" />
             </div>
             
-            <div className="max-w-4xl mx-auto relative z-10">
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium mb-6 text-white font-sans">
-                Ready to Revolutionize Your Simulations?
-              </h2>
-              <p className="text-lg text-gray-300 mb-10 font-normal font-sans">
-                Join thousands of engineers who are already using HyperSym to accelerate their development cycles.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <Link to="/get-started">
-                  <Button 
-                    size="lg" 
-                    className="bg-white text-gray-900 hover:bg-gray-100 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden w-full sm:w-auto"
-                    style={{
-                      clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
-                      boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
-                    }}
-                  >
-                    Schedule a Demo
-                    <ArrowRight className="inline-block ml-2" size={20} />
-                  </Button>
-                </Link>
-                <Link to="/signin">
-                  <Button 
-                    size="lg" 
-                    className="bg-transparent text-white border-2 border-white/70 hover:bg-white hover:text-gray-900 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg relative overflow-hidden w-full sm:w-auto"
-                    style={{
-                      clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
-                      boxShadow: '0 4px 12px rgba(255,255,255,0.1)'
-                    }}
-                  >
-                    Try for Free
-                    <ArrowRight className="inline-block ml-2" size={20} />
-                  </Button>
-                </Link>
+            <div className="w-full relative z-10">
+              <div className="flex flex-col lg:flex-row items-center justify-between">
+                {/* Left side - Animation */}
+                <div className="flex-1 flex items-center justify-start">
+                  <img
+                    src="/sigin_in_page.gif"
+                    alt="HyperSym Platform Animation"
+                    className="w-full max-w-[600px] h-auto object-contain rounded-lg"
+                    style={{ filter: 'brightness(1.2) contrast(1.1)', marginLeft: '-2rem' }}
+                  />
+                </div>
+                
+                {/* Right side - Sign in form */}
+                <div className="flex-shrink-0 w-full max-w-sm lg:mr-12">
+                  <div className="bg-white/10 backdrop-blur-md rounded-2xl p-6 border border-white/20">
+                    <div className="flex justify-center mb-4">
+                      <img src="/hypersym_logo_small.png" alt="HyperSym Logo" className="h-10 w-auto" />
+                    </div>
+                    <h2 className="text-2xl font-bold mb-2 text-center text-white">Welcome!</h2>
+                    <p className="text-center text-gray-300 mb-4 text-sm">Join thousands of engineers revolutionizing their simulations</p>
+                    
+                    <button
+                      onClick={async () => {
+                        await supabase.auth.signInWithOAuth({ provider: 'google' });
+                      }}
+                      className="w-full flex items-center justify-center bg-white text-gray-900 rounded-lg py-2.5 mb-4 hover:bg-gray-100 transition-colors font-medium text-sm"
+                    >
+                      <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" className="w-5 h-5 mr-2" />
+                      Sign in with Google
+                    </button>
+                    
+                    <div className="flex items-center mb-4">
+                      <div className="flex-grow border-t border-white/30" />
+                      <span className="mx-2 text-gray-300 text-sm">or</span>
+                      <div className="flex-grow border-t border-white/30" />
+                    </div>
+                    
+                    <form>
+                      <label className="block text-gray-300 text-sm mb-1" htmlFor="email">Email address</label>
+                      <input 
+                        id="email" 
+                        type="email" 
+                        className="w-full mb-3 px-3 py-2 bg-white/10 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-white placeholder-gray-400 text-sm" 
+                        placeholder="Email address" 
+                        disabled 
+                      />
+                      <label className="block text-gray-300 text-sm mb-1" htmlFor="password">Password</label>
+                      <input 
+                        id="password" 
+                        type="password" 
+                        className="w-full mb-4 px-3 py-2 bg-white/10 border border-white/30 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400 text-white placeholder-gray-400 text-sm" 
+                        placeholder="Password" 
+                        disabled 
+                      />
+                      <button 
+                        type="button" 
+                        className="w-full bg-white text-gray-900 py-2.5 rounded-lg font-semibold text-sm mb-2 opacity-60 cursor-not-allowed hover:opacity-70 transition-opacity"
+                      >
+                        Sign in
+                      </button>
+                    </form>
+                    
+                    <div className="flex justify-between mt-4 text-sm">
+                      <a href="#" className="text-gray-300 hover:text-white transition-colors">Forgot password?</a>
+                      <a href="#" className="text-gray-300 hover:text-white transition-colors">No account? Sign up</a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -985,10 +1019,5 @@ const Index = () => {
     </div>
   );
 };
-
-const supabaseUrl = 'https://xfpxwvdptdwactwerfln.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhmcHh3dmRwdGR3YWN0d2VyZmxuIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDkxMzg3MTksImV4cCI6MjA2NDcxNDcxOX0.KRcHQlIZscNQKFpK2nJGty2ie-scRbopDhlv7dMeibw';
-
-export const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default Index;

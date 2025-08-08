@@ -6,7 +6,7 @@ const Footer = () => {
     <footer 
       className="py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-800 relative z-10 overflow-hidden"
       style={{
-        background: `radial-gradient(circle at 100% 0%, #eaf6ff 0%, #3e7cb1 18%, transparent 32%), linear-gradient(225deg, transparent 0%, #101624 40%, #000 80%, #000 100%)`
+        background: `radial-gradient(circle at 0% 0%, #eaf6ff 0%, #3e7cb1 18%, transparent 32%), linear-gradient(135deg, transparent 0%, #101624 40%, #000 80%, #000 100%)`
       }}
     >
       {/* Enhanced Line Pattern Overlay */}
@@ -60,8 +60,8 @@ const Footer = () => {
       <div className="absolute inset-0 z-10 pointer-events-none">
         {/* Top gradient glow */}
         <div className="absolute top-0 left-0 right-0 h-[40%] bg-gradient-to-b from-[#1a2747]/30 to-transparent" />
-        {/* Blue accent light from top right */}
-        <div className="absolute top-[-20%] right-[-10%] w-[800px] h-[800px] rounded-full bg-blue-600/15 blur-[200px]" />
+        {/* Blue accent light from top left */}
+        <div className="absolute top-[-20%] left-[-10%] w-[800px] h-[800px] rounded-full bg-blue-600/15 blur-[200px]" />
       </div>
       <div className="relative z-20 max-w-7xl mx-auto">
         <div className="grid grid-cols-1 md:grid-cols-[320px_1fr_1fr_1fr] gap-y-8 gap-x-12 items-start">
