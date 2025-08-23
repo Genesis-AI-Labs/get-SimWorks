@@ -439,7 +439,7 @@ const Index = () => {
               <a href="#platform" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Platform</a>
               <Link to="/services" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Services</Link>
               <a href="#research" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Research</a>
-              <Link to="/careers" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Careers</Link>
+              <Link to="/blogs" className="text-gray-400 hover:text-white text-sm transition-colors duration-200">Blogs</Link>
             </div>
           </div>
         </div>
@@ -458,7 +458,7 @@ const Index = () => {
         <div className="absolute top-4 right-4 sm:right-8">
           <Link to="/get-started">
             <Button className="bg-gray-800 text-white hover:bg-gray-700 text-sm px-6 py-2.5 rounded-lg font-medium transition-all duration-200 border border-gray-600">
-              SCHEDULE A CALL <ArrowRight className="inline-block ml-1" size={14} />
+              Get Started 
             </Button>
           </Link>
         </div>
@@ -547,13 +547,13 @@ const Index = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-6 mt-8">
-                <Link to="/get-started">
+                <Link to="https://cal.com/hypersym-ai/30min">
                   <Button size="lg" className="bg-black text-white hover:bg-gray-900 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden" 
                     style={{
                       clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
                       boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
                     }}>
-                    SCHEDULE A CALL <ArrowRight className="inline-block ml-2" size={20} />
+                    Talk to the Founder! <ArrowRight className="inline-block ml-2" size={20} />
                   </Button>
                 </Link>
                 <Link to="/careers">
@@ -562,7 +562,7 @@ const Index = () => {
                       clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
                       boxShadow: '0 4px 12px rgba(0,0,0,0.15)'
                     }}>
-                    CAREERS <ArrowRight className="inline-block ml-2" size={20} />
+                    Blogs <ArrowRight className="inline-block ml-2" size={20} />
                   </Button>
                 </Link>
               </div>
@@ -825,51 +825,149 @@ const Index = () => {
       </section>
 
       {/* Research Section */}
-      <section id="research" className="py-24 px-6 relative z-10 bg-white" style={{borderRadius: '50px 50px 0 0', marginTop: '-50px', paddingTop: '74px'}}>
+      <section id="research" className="py-16 px-6 relative z-10 bg-white" style={{borderRadius: '50px 50px 0 0', marginTop: '-50px', paddingTop: '66px'}}>
         <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            {/* Left side content */}
-            <div>
-              <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium mb-2 text-gray-900 font-sans">HyperSym Research</h2>
-              <h3 className="text-xl sm:text-2xl font-medium mb-6 text-gray-800 font-sans">Advancing Agentic Systems for Simulations</h3>
-              <p className="text-base text-gray-600 mb-8 leading-relaxed font-normal font-sans">
-                We value continuous research and innovation in our agentic systems. Our research is focused on the development and evaluation of AI agents for industry-grade simulations. We support research labs in utilizing our state-of-the-art AI agents in their ecosystem to produce their own simulation-based research.
-              </p>
-              <Link to="/get-started">
-                <Button 
-                  size="lg" 
-                  className="bg-gray-900 text-white hover:bg-gray-800 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden"
-                  style={{
-                    clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
-                    boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
-                  }}
-                >
-                  Apply for Research Program
-                  <ArrowRight className="inline-block ml-2" size={20} />
-                </Button>
-              </Link>
-            </div>
-            
-            {/* Right side - OCTcoder card */}
-            <div>
-              <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="block">
-                <div className="bg-gray-50 border border-gray-200 rounded-xl p-8 hover:border-gray-300 transition-all duration-300 hover:shadow-lg">
-                  <div className="mb-6">
-                    <div className="flex items-center justify-between mb-4">
-                      <h3 className="text-2xl font-medium text-gray-900 font-sans">OCTcoder</h3>
-                      <span className="text-sm bg-blue-100 text-blue-700 px-3 py-1 rounded-full font-medium">Open Source</span>
-                    </div>
-                    <p className="text-gray-600 leading-relaxed font-sans">
-                      OctCoder is an agentic framework that simplifies simulation creation and execution in GNU Octave. It uses natural language inputs to generate, run, and summarize simulations via interconnected AI agents. A user-friendly Gradio web interface enables seamless interaction.
-                    </p>
+          {/* Header Section */}
+          <div className="text-center mb-8">
+            <h2 className="text-4xl sm:text-5xl lg:text-6xl font-medium mb-4 text-gray-900 font-sans">HyperSym Research</h2>
+            <h3 className="text-xl sm:text-2xl font-medium mb-6 text-gray-800 font-sans">Advancing Agentic Systems for Simulations</h3>
+          </div>
+
+          {/* 4 Cards in One Row */}
+          <div className="mb-8">
+            <div className="flex items-center gap-3 flex-wrap justify-center px-8">
+              {/* Card 1 - OCTcoder */}
+              <div className="flex-shrink-0">
+                <a href="https://github.com/simworks-ai/OctCoder" target="_blank" rel="noopener noreferrer" className="block group">
+                  <div className="bg-white border border-gray-50 rounded-lg p-2 hover:border-gray-150 transition-all duration-300 hover:shadow-lg hover:scale-105 relative overflow-hidden">
+                    {/* Grid overlay effect */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: `repeating-linear-gradient(
+                          to bottom,
+                          rgba(0,0,0,0.3) 0px,
+                          rgba(0,0,0,0.3) 1px,
+                          transparent 1px,
+                          transparent 8px
+                        ),
+                        repeating-linear-gradient(
+                          to right,
+                          rgba(0,0,0,0.3) 0px,
+                          rgba(0,0,0,0.3) 1px,
+                          transparent 1px,
+                          transparent 8px
+                        )`
+                      }}
+                    />
+                    <img src="/hypersym-research-card-1.png" alt="OCTcoder" className="w-60 h-auto rounded" />
                   </div>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">View on GitHub</span>
-                    <ArrowRight className="text-gray-400" size={20} />
+                </a>
+              </div>
+              
+              {/* Card 2 */}
+              <div className="flex-shrink-0">
+                <a href="#" className="block group">
+                  <div className="bg-white border border-gray-50 rounded-lg p-2 hover:border-gray-150 transition-all duration-300 hover:shadow-lg hover:scale-105 relative overflow-hidden">
+                    {/* Grid overlay effect */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: `repeating-linear-gradient(
+                          to bottom,
+                          rgba(0,0,0,0.3) 0px,
+                          rgba(0,0,0,0.3) 1px,
+                          transparent 1px,
+                          transparent 8px
+                        ),
+                        repeating-linear-gradient(
+                          to right,
+                          rgba(0,0,0,0.3) 0px,
+                          rgba(0,0,0,0.3) 1px,
+                          transparent 1px,
+                          transparent 8px
+                        )`
+                      }}
+                    />
+                    <img src="/HyperSym-Research-Card-2.png" alt="HyperSym Research Card 2" className="w-60 h-auto rounded" />
                   </div>
-                </div>
-              </a>
+                </a>
+              </div>
+              
+              {/* Card 3 */}
+              <div className="flex-shrink-0">
+                <a href="#" className="block group">
+                  <div className="bg-white border border-gray-50 rounded-lg p-2 hover:border-gray-150 transition-all duration-300 hover:shadow-lg hover:scale-105 relative overflow-hidden">
+                    {/* Grid overlay effect */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: `repeating-linear-gradient(
+                          to bottom,
+                          rgba(0,0,0,0.3) 0px,
+                          rgba(0,0,0,0.3) 1px,
+                          transparent 1px,
+                          transparent 8px
+                        ),
+                        repeating-linear-gradient(
+                          to right,
+                          rgba(0,0,0,0.3) 0px,
+                          rgba(0,0,0,0.3) 1px,
+                          transparent 1px,
+                          transparent 8px
+                        )`
+                      }}
+                    />
+                    <img src="/HyperSym-Research-Card-3.png" alt="HyperSym Research Card 3" className="w-60 h-auto rounded" />
+                  </div>
+                </a>
+              </div>
+              
+              {/* Card 4 */}
+              <div className="flex-shrink-0">
+                <a href="#" className="block group">
+                  <div className="bg-white border border-gray-50 rounded-lg p-2 hover:border-gray-150 transition-all duration-300 hover:shadow-lg hover:scale-105 relative overflow-hidden">
+                    {/* Grid overlay effect */}
+                    <div className="absolute inset-0 opacity-0 group-hover:opacity-10 transition-opacity duration-300 pointer-events-none"
+                      style={{
+                        background: `repeating-linear-gradient(
+                          to bottom,
+                          rgba(0,0,0,0.3) 0px,
+                          rgba(0,0,0,0.3) 1px,
+                          transparent 1px,
+                          transparent 8px
+                        ),
+                        repeating-linear-gradient(
+                          to right,
+                          rgba(0,0,0,0.3) 0px,
+                          rgba(0,0,0,0.3) 1px,
+                          transparent 1px,
+                          transparent 8px
+                        )`
+                      }}
+                    />
+                    <img src="/HyperSym-Research-Card-4.png" alt="HyperSym Research Card 4" className="w-60 h-auto rounded" />
+                  </div>
+                </a>
+              </div>
             </div>
+          </div>
+
+          {/* Content and Button Section */}
+          <div className="text-center max-w-4xl mx-auto">
+            <p className="text-base text-gray-600 mb-8 leading-relaxed font-normal font-sans">
+              We value continuous research and innovation in our agentic systems. Our research is focused on the development and evaluation of AI agents for industry-grade simulations. We support research labs in utilizing our state-of-the-art AI agents in their ecosystem to produce their own simulation-based research.
+            </p>
+            <Link to="/get-started">
+              <Button 
+                size="lg" 
+                className="bg-gray-900 text-white hover:bg-gray-800 text-lg px-8 py-4 font-semibold transition-all duration-200 shadow-lg border-0 relative overflow-hidden"
+                style={{
+                  clipPath: 'polygon(0 0, calc(100% - 8px) 0, 100% 8px, 100% 100%, 8px 100%, 0 calc(100% - 8px))',
+                  boxShadow: '0 4px 12px rgba(0,0,0,0.3)'
+                }}
+              >
+                Apply for Research Program
+                <ArrowRight className="inline-block ml-2" size={20} />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
